@@ -22,22 +22,24 @@ class ResUsers(models.Model):
 
 class stock_move(models.Model):
     _inherit = 'stock.move'
+
     @api.constrains('state', 'location_id', 'location_dest_id')
     def check_user_location_rights(self):
-        self.ensure_one()
-        if self.state == 'draft':
-            return True
-        user_locations = self.env.user.stock_location_ids
-        print(user_locations)
-        print("Checking access %s" %self.env.user.default_picking_type_ids)
-        if self.env.user.restrict_locations:
-            message = _(
-                'Invalid Location. You cannot process this move since you do '
-                'not control the location "%s". '
-                'Please contact your Adminstrator.')
-            if self.location_id not in user_locations:
-                raise Warning(message % self.location_id.name)
-            elif self.location_dest_id not in user_locations:
-                raise Warning(message % self.location_dest_id.name)
+        # self.ensure_one()
+        for each in self:
+            if each.state == 'draft':
+                return True
+            user_locations = each.env.user.stock_location_ids
+            # print(user_locations)
+            # print("Checking access %s" %self.env.user.default_picking_type_ids)
+            if each.env.user.restrict_locations:
+                message = _(
+                    'Invalid Location. You cannot process this move since you do '
+                    'not control the location "%s". '
+                    'Please contact your Adminstrator.')
+                if each.location_id not in user_locations:
+                    raise Warning(message % each.location_id.name)
+                elif each.location_dest_id not in user_locations:
+                    raise Warning(message % each.location_dest_id.name)
 
 
