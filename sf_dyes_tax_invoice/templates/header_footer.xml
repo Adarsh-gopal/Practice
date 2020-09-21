@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <template id="external_layout_standard_sf">
+        <div class="header">
+            <table class="table" style="border:1px solid black;border-top:1px solid white;width:100%;margin-bottom:0;">
+                <tr>
+                    <td colspan="3" style="border:1px solid white;border-bottom:1px solid black;text-align:center;">
+                    <!-- <div class="container"> -->
+                    <div class="row">
+                        <div class="col-3"> <!-- style="margin-top:-15px;" -->
+                            <img class="text-right" t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="height:140px;max-width:100px float:left;"/>
+                        </div>
+
+                        <div class="text-center col-5" style="margin-top:1px;word-wrap: break-word !important;">
+                            <h4 style="text-align:left;">
+                                <strong><span t-field="o.company_id.name"/></strong>
+                            </h4>
+                            <p style="text-align:left;font-size:13px;">
+                                <t t-set="wh_add" t-value="o.saleno(o.invoice_origin)"/>
+                                    <span t-field="wh_add.street"/><br/>
+                                    <span t-field="wh_add.street2"/><br/>
+                                    <span t-field="wh_add.city"/>
+                                    <span t-field="wh_add.zip"/>,
+                                    <span t-field="wh_add.state_id"/>,
+                                    <span t-field="wh_add.country_id"/><br/>
+                                    <strong>
+                                        <span style="font-size:15px;">GSTIN:</span>
+                                        <span style="font-size:15px;" t-field="wh_add.vat"/>
+                                    </strong>
+                            </p>
+                        </div>
+                        <div class="col-4"  style="font-size:14px;text-align:left !important;">
+                            <input style="margin-left:80px;" type="checkbox"/><span style="margin-left:5px;">Original for Recepient</span><br/><br/>
+                            <input style="margin-left:80px;" type="checkbox"/><span style="margin-left:5px;">Duplicate for Transporter</span><br/><br/>
+                            <input style="margin-left:80px;" type="checkbox"/><span style="margin-left:5px;">Triplicate for Supplier</span>
+                        </div>
+                    <!-- </div> -->
+                </div>
+                </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="border:2px solid black;text-align:center;">
+                        <h6><strong style="font-size:18px">TAX INVOICE</strong></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:2px solid black;font-size:13px;width:53%">
+                        <strong style="font-size:16px;">Billed to : </strong>
+                            <br/>
+                            <strong style="font-size:16px"><span t-if="o.partner_id.name" t-field="o.partner_id.name"/></strong><br/>
+                            <span t-if="o.partner_id.street" t-field="o.partner_id.street"/>,<br/>
+                            <span t-if="o.partner_id.street2" t-field="o.partner_id.street2"/><br/>
+                            <span t-if="o.partner_id.city" t-field="o.partner_id.city"/>
+                            <span t-if="o.partner_id.state_id" t-field="o.partner_id.state_id"/>
+                            <span t-if="o.partner_id.zip" t-field="o.partner_id.zip"/><br/>
+                            <span t-if="o.partner_id.country_id" t-field="o.partner_id.country_id"/><br/>
+                            <t t-if="o.partner_id.vat">
+                                <strong style="font-size:12px;">GSTIN :
+                                <span t-field="o.partner_id.vat"/>
+                                </strong>
+                            </t>
+                    </td>
+                    <td style="border:2px solid black;font-size:13px;width:47%">
+                        <div class="row">
+                            <div class="col-5" style="text-align:left;font-size:13px;">
+                                <strong style="font-size:16px;">Invoice No : </strong><br/>
+                                <strong style="font-size:13px;">Invoice Date : </strong><br/>
+                                <span style="font-size:13px;"> Cust Order Number :</span><br/>
+                                <span style="font-size:13px;"> Payment Method : </span><br/>
+                                <span style="font-size:13px;"> Date of Supply  :  </span><br/>
+                                <span style="font-size:13px;"> Delivery Terms  :   </span><br/>
+                            </div>
+                            <div class="col-7" style="text-align:left;font-size:13px;">
+                                <strong style="font-size:16px;"><span t-field="o.name"/></strong><br/>
+                                <strong style="font-size:13px;"><span t-esc="o.invoice_date.strftime('%d-%m-%Y')"/></strong><br/>
+                                <span style="font-size:13px;" t-field="o.customer_order_number"/><br/>
+                                <span style="font-size:13px;" t-field="o.payment"/><br/>
+                                <t t-set="dos" t-value="o.deliverydate(o.invoice_origin)"/>
+                                <span style="font-size:13px;" t-esc="dos.strftime('%d-%m-%Y')"/><br/>
+                                <span style="font-size:13px;" t-esc="o.invoice_incoterm_id.name"/><br/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border:2px solid black;font-size:13px;width:53%">
+                        <strong>Shipped to : </strong>
+                        <br/>
+                        <span t-if="o.partner_shipping_id.name" t-field="o.partner_shipping_id.name"/><br/>
+                        <span t-if="o.partner_shipping_id.street" t-field="o.partner_shipping_id.street"/><br/>
+                        <span t-if="o.partner_shipping_id.street2" t-field="o.partner_shipping_id.street2"/><br/>
+                        <span t-if="o.partner_shipping_id.city" t-field="o.partner_shipping_id.city"/>
+                        <span t-if="o.partner_shipping_id.state_id" t-field="o.partner_shipping_id.state_id"/>
+                        <span t-if="o.partner_shipping_id.zip" t-field="o.partner_shipping_id.zip"/>
+                        <span t-if="o.partner_shipping_id.country_id" t-field="o.partner_shipping_id.country_id"/><br/>
+                        <t t-if="o.partner_shipping_id.vat">
+                            <strong style="font-size:12px;">GSTIN :
+                            <span t-field="o.partner_shipping_id.vat"/>
+                            </strong>
+                        </t>
+                    </td>
+                    <td style="border:2px solid black;font-size:13px;width:47%">
+                        <div class="row">
+                            <div class="col-5" style="text-align:left;font-size:13px;">
+                                <span style="font-size:13px;">Destination :   </span><br/>
+                                <span style="font-size:13px;">Transporter :   </span><br/>
+                                <span style="font-size:13px;">Vehicle No  :   </span><br/>
+                                <span style="font-size:13px;">E-Way Bill No : </span><br/>
+                                <span style="font-size:13px;">LR/Way Bill No  :   </span><br/>
+                                <span style="font-size:13px;">LR/Way Bill Date :  </span><br/>
+                            </div>
+                            <div class="col-7" style="text-align:left;font-size:13px;">
+                                <span style="font-size:13px;" t-field="o.destination"/><br/>
+                                <span style="font-size:13px;" t-field="o.transporter"/><br/>
+                                <span style="font-size:13px;" t-field="o.vehicle_number"/><br/>
+                                <span style="font-size:13px;" t-field="o.eway_bill_number"/><br/>
+                                <span style="font-size:13px;" t-field="o.lr_way_bill_number"/><br/>
+                                <span style="font-size:13px;" t-field="o.lr_way_bill_date"/><br/>
+                            </div>
+                        </div>
+                    </td>
+            </tr>
+        </table>
+    </div>
+        <div class="article o_report_layout_standard"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+    </template>
+</data>
+
+</odoo>

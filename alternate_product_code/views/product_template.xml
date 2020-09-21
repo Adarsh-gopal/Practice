@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="product_template_only_form_view_alt_code">
+      <field name="name">Alternate product code in template</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_only_form_view"/>
+      <field name="arch" type="xml">
+        <field name="default_code" position="after">
+          <field name="alt_code" groups="alternate_product_code.alt_code_user"/>
+        </field>
+      </field>
+    </record>
+
+  </data>
+</odoo>

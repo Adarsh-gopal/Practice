@@ -1,0 +1,67 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="alternative_gl_tree">
+      <field name="name">Tree View For Alternative GL</field>
+      <field name="model">alternative.gl</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="description"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="alternative_gl_form">
+      <field name="name">Form View For Alternative GL</field>
+      <field name="model">alternative.gl</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="name"/>
+              </group>
+              <group>
+                <field name="description"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Account Mapping">
+                <field name="gl_lines">
+                  <tree editable="bottom">
+                    <field name="account_on_partner" options="{'no_create': True, 'no_create_edit':True,'no_open': True}"/>
+                    <field name="account_to_use_instead" options="{'no_create': True, 'no_create_edit':True,'no_open': True}"/>
+                  </tree>
+                  <form>
+                    <sheet>
+                      <group>
+                        <group>
+                          <field name="account_on_partner" options="{'no_create': True, 'no_create_edit':True,'no_open': True}"/>
+                          <field name="account_to_use_instead" options="{'no_create': True, 'no_create_edit':True,'no_open': True}"/>
+                        </group>
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="alternative_gl_action" model="ir.actions.act_window">
+      <field name="name">Alternative GL</field>
+      <field name="res_model">alternative.gl</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+      name="Alternative GL" id="alternative_gl_menu"
+      parent="account.account_invoicing_menu"
+      action="alternative_gl_action" sequence="4"/>
+
+  </data>
+</odoo>

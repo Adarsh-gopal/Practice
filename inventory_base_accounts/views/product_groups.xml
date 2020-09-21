@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Valuation Laver Product Groups -->
+        <record id="stock_valuation_layer_tree_product_groups" model="ir.ui.view">
+            <field name="name">stock_valuation_layer_tree_product_groups</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="item_group" readonly="1">
+                        <form>
+                        </form>
+                    </field>
+                    <field name="product_group_1" readonly="1">
+                        <form>
+                        </form>
+                    </field>
+                    <field name="product_group_2" readonly="1">
+                        <form>
+                        </form>
+                    </field>
+                    <field name="product_group_3" readonly="1">
+                        <form>
+                        </form>
+                    </field>
+                </field>
+            </field>
+        </record>
+
+
+        <!-- Product Moves Product Groups -->
+        <!-- <record id="view_move_line_tree_inherit_product_groups" model="ir.ui.view">
+            <field name="name">view_move_line_tree_inherit_product_groups</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="item_group" readonly="1">
+                        <form>
+                        </form>
+                    </field>
+                    <field name="product_group_1" readonly="1">
+                        <form>
+                        </form>
+                    </field>
+                    <field name="product_group_2" readonly="1">
+                        <form>
+                        </form>
+                    </field>
+                    <field name="product_group_3" readonly="1">
+                        <form>
+                        </form>
+                    </field>
+                </field>
+            </field>
+        </record> -->
+
+    </data>
+</odoo>

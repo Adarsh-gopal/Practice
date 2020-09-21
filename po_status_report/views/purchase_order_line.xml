@@ -1,0 +1,75 @@
+<odoo>
+	<data>	
+
+<!-- Purchase Order Lines 
+
+ 		<record id="sh_pol_purchase_order_line_form_view_inherit" model="ir.ui.view">
+			<field name="name">Purchase Order Line Form</field>
+			<field name="model">purchase.order.line</field>
+			<field name="arch" type="xml">							
+				<form>
+					<sheet>					
+						<group>
+							<group>
+								<field name="order_id" string="Order"/>
+								<field name="product_id"/>
+								<field name="name"/>
+								<field name="date_planned"/>
+								<field name="product_qty" string="Quantity"/>								
+							</group>
+							<group>
+								<field name="partner_id"/>
+								<field name="qty_received"/>
+								<field name="qty_invoiced"/>
+								<field name="price_unit"/>
+								<field name="price_subtotal"/>							
+							</group>
+						</group>						
+					</sheet>
+				</form>				
+			</field>
+		</record>  -->
+		
+ 		<record id="sh_pol_purchase_order_line_tree_view_inherit" model="ir.ui.view">
+			<field name="name">Purchase Order Line Tree</field>
+			<field name="model">purchase.order.line</field>
+			<field name="arch" type="xml">			
+				<tree create = "false">
+					<field name="order_id" string="Order"/>
+					<field name="product_id"/>
+					<field name="name"/>
+					<field name="partner_id"/>
+					<field name="date_planned"/>
+					<field name="product_qty" string="Quantity"/>
+					<field name="qty_received"/>
+					<field name="qty_invoiced"/>
+					<field name="price_unit"/>
+					<field name="z_currency_id"/>
+					<field name="taxes_id" widget="many2many_tags"/>
+					<field name="price_subtotal"/>	
+					<field name="z_status"/>
+				</tree>				
+			</field>
+		</record>
+
+
+
+		<record id="sh_action_purchase_order_lines" model="ir.actions.act_window">
+			<field name="name">PO Status Report</field>
+			<field name="res_model">purchase.order.line</field>
+			<field name="type">ir.actions.act_window</field>
+			<!-- <field name="view_type">form</field> -->
+			<field name="view_mode">tree,pivot</field>
+			<field name="target">fullscreen</field>
+            <field name="domain">[('state','in',('purchase','done'))]</field>
+            <field name="view_id" ref="sh_pol_purchase_order_line_tree_view_inherit"/>
+		</record>
+				
+	
+ 	<menuitem id="sh_pol_order_line" name="PO Status Report" action="sh_action_purchase_order_lines" parent="purchase.purchase_report"/>
+
+ 	<menuitem id="sh_purchase_report" name="Purchase Analysis" parent="purchase.purchase_report" sequence="99"
+        groups="purchase.group_purchase_manager" action="purchase.action_purchase_order_report_all"/>
+
+ 	</data>
+</odoo>

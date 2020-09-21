@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<odoo>
+
+        <!-- account.move view inherte -->
+        <record id="account_move_form_view_inherit" model="ir.ui.view">
+            <field name="name">account.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+            <field name="currency_id" position='after'>
+                <field name="z_currency_rate" 
+                    attrs="{'invisible': ['|',('type', 'in', ('out_invoice', 'out_refund')),('currency_id','in',[20])]
+                    ,'readonly': [('state', 'in', ('posted', 'cancel'))]}"/>
+
+                    
+            </field>
+            </field>
+        </record>
+
+        <!-- stock.picking view inherte -->
+        <record id="stock_picking_form_view_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+            <field name="origin" position='after'>
+                <field name="z_currency_id" attrs="{'invisible': ['|',('picking_type_code' ,'not in',['incoming'] ) ,('z_currency_id','in',[20])]}"/>
+                <field name="z_currency_rate" 
+                    attrs="{'invisible': ['|',('picking_type_code' ,'not in',['incoming'] ) ,('z_currency_id','in',[20])]
+                    ,'readonly': [('state', 'in', ('done', 'cancel'))]}"/>
+            </field>
+            </field>
+        </record>
+
+
+
+        <!-- currency rate -->
+        <record model='ir.ui.view' id='view_currency_form'>
+            <field name='name'>res.currency.form</field> 
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_form"/>
+            <field name='arch' type='xml'>
+                <field name="active" position="after">
+                    <field name="inverse_rate"/>
+                </field>
+            </field>
+        </record>   
+
+        <record model='ir.ui.view' id='view_currency_tree'>
+            <field name='name'>res.currency.tree</field> 
+            <field name="model">res.currency</field>
+            <field name="inherit_id" ref="base.view_currency_tree"/>
+            <field name='arch' type='xml'>
+                <field name="rate" position="after">
+                    <field name="inverse_rate"/>
+                </field>
+            </field>
+        </record>        
+    
+    <!-- currency rate views -->
+        <record model='ir.ui.view' id='view_currency_rate_tree'>
+            <field name='name'>res.currency.rate.tree</field> 
+            <field name="model">res.currency.rate</field>
+            <field name="inherit_id" ref="base.view_currency_rate_tree"/>
+            <field name='arch' type='xml'>
+                <field name="rate" position="after">
+                    <field name="inverse_rate"/>
+                </field>
+            </field>
+        </record>   
+
+        <record model='ir.ui.view' id='view_currency_rate_form'>
+            <field name='name'>res.currency.rate.form</field> 
+            <field name="model">res.currency.rate</field>
+            <field name="inherit_id" ref="base.view_currency_rate_form"/>
+            <field name='arch' type='xml'>
+                <field name="rate" position="after">
+                    <field name="inverse_rate"/>
+                </field>
+            </field>
+        </record>          
+        
+
+</odoo>
