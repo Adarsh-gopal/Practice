@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  
+  <record id="split_mo_wizard_form" model="ir.ui.view">
+    <field name="name">Wizard that splits MO</field>
+    <field name="model">mrp.split.wiz</field>
+    <field name="arch" type="xml">
+      <form string="Backorder creation">
+        <group>
+          <group>
+            <field name="mo_id" string="Splitting MO" readonly="1"/>
+            <field name="qty_to_split" string="Quantity to Split"/>
+          </group>
+        </group>
+        <footer>
+          <button name="split_mo" string="Split" type="object" class="oe_highlight"/>
+          <button string="_Cancel" class="btn-secondary" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="mrp_production_form_view_split_mo" model="ir.ui.view">
+    <field name="name">Split Button on MO</field>
+    <field name="model">mrp.production</field>
+    <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+    <field name="arch" type="xml">
+      <button name="action_confirm" position="after">
+        <button name="split_mo" icon="fa-chain-broken" string="Split" type="object" attrs="{'invisible':[('state','not in',['draft','confirmed'])]}"/>
+      </button>
+      <field name="bom_id" position="after">
+        <field name="origin_mo" readonly="1" string="Origin MO" attrs="{'invisible':[('origin_mo','=',False)]}"/>
+        <field name="split_mos" readonly="1" string="Split MOs" attrs="{'invisible':[('split_mos','=',[])]}" widget="many2many_tags"/>
+      </field>
+    </field>
+  </record>
+
+</odoo>

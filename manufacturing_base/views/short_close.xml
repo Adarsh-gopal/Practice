@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="view_change_production_qty_wizard_short_close" model="ir.ui.view">
+    <field name="name">Short Close</field>
+    <field name="model">change.production.qty</field>
+    <field name="arch" type="xml">
+     <form string="Change Product Qty">
+        <group>
+          <field name="product_qty" readonly="1"/>
+          <field name="mo_id" invisible="1"/>
+          <field name="qty_produced" readonly="1"/>
+          <field name="balance_qty" readonly="1"/>
+        </group>
+        <footer>
+          <button name="short_close" string="Confirm" colspan="1" type="object" class="btn-primary"/>
+          <button string="Cancel" class="btn-secondary" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_short_close" model="ir.actions.act_window">
+    <field name="name">Short Close</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">change.production.qty</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="view_ids" eval="[(5, 0, 0),
+      (0, 0, {'view_mode': 'form', 'view_id': ref('view_change_production_qty_wizard_short_close')})]"/>
+  </record>
+
+  <record id="mrp_production_form_view_short_close" model="ir.ui.view">
+    <field name="name">Short Close for MO</field>
+    <field name="model">mrp.production</field>
+    <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+    <field name="arch" type="xml">
+      <button name="split_mo" position="after">
+        <field name="qty_produced" invisible="1"/>
+        <field name="product_qty" invisible="1"/>
+        <button type="action"
+          name="%(action_short_close)d"
+          context="{'default_mo_id': id,
+                    'default_qty_produced':qty_produced,
+                    'default_product_qty':product_qty}"
+          icon="fa-scissors"
+          string="Short Close" class="oe_link" attrs="{'invisible': ['|', ('state', 'in', ('draft', 'done','cancel')), ('id', '=', False)]}"/>
+      </button>
+      <field name="bom_id" position="after">
+        <!-- <field name="hide_plan" invisible="1"/> -->
+        <field name="planned_to_produce" readonly="1" attrs="{'invisible':[('state','!=','done')]}"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="view_stock_move_raw_tree_short_close" model="ir.ui.view">
+    <field name="name">Short Close for Stock Move Tree</field>
+    <field name="model">stock.move</field>
+    <field name="inherit_id" ref="mrp.view_stock_move_raw_tree"/>
+    <field name="arch" type="xml">
+      <field name="product_uom_qty" position="after">
+        <!-- <field name="hide_plan" invisible="1"/> -->
+        <field name="planned_to_consume"  attrs="{'column_invisible':[('parent.state','!=','done')]}"/>
+      </field>
+    </field>
+  </record>
+
+</odoo>
