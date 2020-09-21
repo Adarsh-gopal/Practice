@@ -1,9 +1,0 @@
-Inventory
-  -Warehouse
-    --Storage Locations
-    --Multi-Warehouses
-    --Multi-Step Routes
-
-Manufacturing
-  -Operations
-    --Work Orders
