@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+        
+        <record id="view_partner_form_inherite1" model="ir.ui.view">
+            <field name="name">res.partner.view.form.inherit1</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="/form/sheet/notebook/page[2]/group//field[@name='property_product_pricelist']" position="replace">
+                    <field name="property_product_pricelist" groups="product.group_product_pricelist" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page[2]/group//field[@name='property_payment_term_id']" position="after">
+                    <field name="check_pricelist"/>
+                    <field name="special_pricelist" attrs="{'invisible': [('check_pricelist', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="product_pricelist_view_form_inherit" model="ir.ui.view">
+            <field name="name">product.pricelist.view.form.inherit2</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view"/>
+            <field name="arch" type="xml">
+                <field name="country_group_ids" position="after">
+                    <field name="customer" widget="many2many_tags"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="partner_sale_view_form_inherited">
+            <field name="name">partner.sale.view.form.inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name='pricelist_id' position='replace'>
+                    <field name='pricelist_id' groups="product.group_product_pricelist" options="{'no_open':True,'no_create': True}" invisible='1'/>
+                </field>
+                 <field name='currency_id' position='replace'>
+                    <field name='currency_id' invisible='1'/>
+                 </field>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="replace">
+                   <field name="price_unit"/>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

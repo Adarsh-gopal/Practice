@@ -1,0 +1,16 @@
+<odoo>
+  <data>
+    
+    <record model="ir.module.category" id="alt_code">
+        <field name="name">Alternate Code</field>
+        <field name="description">User access for Alt Code</field>
+        <!-- <field name="sequence">20</field> -->
+    </record>
+
+    <record id="alt_code_user" model="res.groups">
+        <field name="name">Alternate Code Visible</field>
+        <field name="category_id" ref="alt_code"/>
+    </record>
+
+  </data>
+</odoo>

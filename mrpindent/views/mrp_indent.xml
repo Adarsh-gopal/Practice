@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="indent_form_view" model="ir.ui.view">
+		    <field name="name">indent.order.form</field>
+		    <field name="model">indent.order</field>
+		    <field name="arch" type="xml">
+		        <form string="Material Requisition Views" delete="false" duplicate='0'>
+		        	<header>
+		        		<button name="button_indent_confirm" type="object" class="btn-primary" string="Confirm Material Requisition" attrs="{'invisible': [('state','not in',('draft'))]}"/>
+		        		<button name="button_indent_confirm_approve" type="object" class="btn-primary" string="Approve Material Requisition" attrs="{'invisible': [('state','not in',['waiting_approval' ,'inprogress'])]}"/>
+		        		<button name="button_indent_transfer" string="Ready To Transfer" type="object"	class="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}" invisible="1"/>
+		        		<button name="indent_transfer_move_confirm_new" string="Confirm Transfer" type="object" clsass="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}"/>
+		        		<button name="indent_cancel" string="Cancel" type="object" clsass="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}"/>
+		        		<button name="indent_reject" string="Reject" type="object" clsass="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}"/>
+		        		<!-- <button name="indent_check_new" string="Create Checked Material Requisition" type="object" clsass="oe_highlight"/> -->
+	                    <field name="state" widget="statusbar" />
+	                </header>
+		        	<sheet>
+		        		<h1>
+							<field name="name" class="oe_inline" readonly="1"/>
+						</h1>
+			            <group>
+			                <group>
+			                	<field name="partner_id" invisible="1"/>
+			                    <!-- <field name="requirement_id"/> -->
+			                    <field name="order_type"/>
+			                    <field name="mrp_order_ids"/>
+			                    <field name="stock_source"/>
+			                    <field name="picking_type_id"/>
+			                    <field name="analytic_account_id"/>
+					            <!-- <field name="location_dest_id"/> -->
+			                    <field name="company_id" groups="base.group_multi_company"/>
+			                </group>
+			                <group>
+			                	
+			                    <field name="indent_date"/>
+			                    <field name="require_date"/>
+			                    <field name="approve_date"/>
+			                    <field name="issued_by" invisible='1'/>
+			                    <field name="status" invisible='1'/>
+			                </group>
+			            </group>
+			            <notebook>
+			            	
+			            	<page name="indent_product_list" string="Products">
+					            <field name="product_lines">
+					                <tree string="Material Requisition Order Lines" editable="bottom">
+					                	<!-- <field name="sequence" /> -->
+					                    <field name="product_id" context="{'partner_id': parent.partner_id}"/>
+					                    <field name="product_uom"/>
+					                    <field name="z_analytic_account_id"/>
+					                    <field name="product_uom_qty"/>
+					                    <field name="product_uom_qty_reserved" invisible="1"/>
+					                    <field name="product_uom" string="Unit" groups="product.group_uom"/>
+					                    <field name="location_id"/>
+					                    <field name="location_dest_id"/>
+					                    <field name="state" invisible="1"/>
+					                </tree>
+					            </field>
+					        </page>
+
+					        <page string="Other Info">
+								<group>
+									<group><field name="origin" invisible='1'/></group>
+								</group>
+							</page>
+			        	</notebook>
+			        </sheet>
+			         <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+		        </form>
+		    </field>
+		</record>
+
+		<record model="ir.ui.view" id="indent_form_tree">
+            <field name="name">Material Requisition tree view</field>
+            <field name="model">indent.order</field>
+            <field name="arch" type="xml">
+                <tree string="Material Requisition">
+                    <!-- <button type="object" icon="gtk-delete" name="unlink"/> -->
+                    <field name="name"/>
+                    <field name="issued_by" />
+                    <field name="indent_date" />
+                </tree>
+            </field>
+        </record>
+		<record model="ir.ui.view" id="indent_order_pivot">
+            <field name="name">indent.order.pivot</field>
+            <field name="model">indent.order</field>
+            <field name="arch" type="xml">
+                <pivot string="Material Requisition Order">
+                    <field name="name" type="row"/>
+                    <field name="origin" type="col"/>
+
+                </pivot>
+            </field>
+        </record>
+		<record model="ir.actions.act_window" id="indent_form_action_view">
+			<field name="name">Material Requisition</field>
+			<field name="res_model">indent.order</field>
+			<field name="view_mode">tree,pivot,form</field>
+		</record>
+
+
+		<menuitem id="indent_main_menu" name="Material Requisition"/>
+		<menuitem action="indent_form_action_view" id="indent_main_menu_child" 
+		name="Material Requisition"  web_icon="mrpindent,static/description/download.png"/>
+	</data>
+</odoo>

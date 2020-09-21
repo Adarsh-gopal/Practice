@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	    <record id="view_inventory_base_report" model="ir.ui.view">
+	        <field name="name">inventory.base.report.form</field>
+	        <field name="model">inventory.base.report</field>
+	        <field name="arch" type="xml">
+	            <form string="Inventory Base Report"  create="false" edit="false">
+	                <sheet>
+	                    <group>
+	                    <field name='product_id'/>
+	                    <field name='uom_id'/>
+	                    <field name='category_id'/>
+	                    <field name='product_code'/>
+	                    <field name='warehouse_id'/>
+	                    <field name='location_id'/>
+	                    <field name='location_dest_id'/>
+	                    <field name='product_qty'/>
+	                    <field name='price_unit'/>
+	                    <field name='transaction_types'/>
+	                    <field name='value'/>
+	                    <field name='move_id'/>
+                        <field name='company_id'/>
+	                    <field name='date'/>
+	                </group>
+	                </sheet>
+	            </form>
+	        </field>
+    	</record>
+
+    	<record id="view_inventory_base_report_tree" model="ir.ui.view">
+	        <field name="name">inventory.base.report.tree</field>
+	        <field name="model">inventory.base.report</field>
+	        <field name="arch" type="xml">
+	            <tree string="Inventory Base Report"  create="false" edit="false">
+	                    <field name='product_id'/>
+	                    <field name='uom_id'/>
+	                    <field name='category_id'/>
+	                    <field name='product_code'/>
+	                    <field name='warehouse_id'/>
+	                    <field name='location_id'/>
+	                    <field name='location_dest_id'/>
+	                    <field name='product_qty'/>
+	                    <field name='price_unit'/>
+	                    <field name='value'/>
+	                    <field name='transaction_types'/>
+                        <field name='company_id'/>
+	                    <field name='date'/>
+	            </tree>
+	        </field>
+    	</record>
+
+        <record id="view_pivot_inventory_base" model="ir.ui.view">
+            <field name="name">pivot</field>
+            <field name="model">inventory.base.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Pivot View">
+                   <field name="product_id" type="row"/>
+                   <field name="value" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+    	<record id="view_inventory_base_report_filter" model="ir.ui.view">
+            <field name="name">inventory.base.report.filter</field>
+            <field name="model">inventory.base.report</field>
+            <field name="arch" type="xml">
+                <search string="Search ">
+                    <field name="product_id" />
+                    <field name="product_code" />
+                    <field name="category_id" />
+                    <field name="date" />
+                    <field name="transaction_types"/>
+                    <field name="warehouse_id"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                    
+                    <group expand="0" string="Group By">
+                        <filter name="product_id" string="Product" domain="[]" context="{'group_by': 'product_id'}"/>
+                        <filter string="Warehouse" name="warehouse_id" domain="[]" context="{'group_by': 'warehouse_id'}"/>
+                        <filter string="Transaction Type" name="transaction_types" domain="[]" context="{'group_by': 'transaction_types'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+
+   		<record id="action_inventory_base_report" model="ir.actions.act_window">
+            <field name="name">Inventory Transaction</field>
+            <field name="res_model">inventory.base.report</field>
+            <field name="type">ir.actions.act_window</field>
+             <field name="view_mode">tree,pivot,form</field>
+            <field name="view_id" ref="view_inventory_base_report_tree"/>    
+   		</record>
+
+    	<menuitem 
+    			action="action_inventory_base_report" 
+    			id="menu_inventory_base_report"
+    			parent="stock.menu_warehouse_report"
+    	/>
+
+
+
+    	 <record id="view_picking_form_custom_inherit_price1" model="ir.ui.view"> 
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//sheet/notebook/page[3]/field[@name='move_ids_without_package']/tree/field[@name='product_id']" position="after">
+                    <field name="data_sent" invisible="1"/>
+                    <field name="s_type" invisible="1"/>
+                    <field name="d_type" invisible='1'/>
+                    <field name="z_price" invisible='1'/>
+                </xpath>
+              
+                
+            </field>
+        </record>
+
+
+
+
+        <record id="stock_valuation_layer_form_inherited_inventory" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.form.inherited</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stock_move_id']" position="after">
+                <field name="data_sent" invisible='1'/>
+            </xpath>
+        </field>
+    </record>
+
+
+      <record id="view_quant_tree_editable_warehouse" model="ir.ui.view">
+            <field name="name">stock.quant.inherit.tree.editable</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock.view_stock_quant_tree_editable"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lot_id']" position="after" >
+                    
+                    <field name="warehouse_id"/>
+                
+                </xpath>
+            </field>
+        </record>
+
+
+</odoo>

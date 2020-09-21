@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_category_property_form" model="ir.ui.view">
+        <field name="name">partner.over.credit.limit.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <field name="property_account_position_id" position="after">
+                <field name="credit_limit"/>
+                <field name="payment_term"/>
+                <!-- <field name="next_commitment"/> -->
+            </field>
+        </field>
+    </record>
+    <record id="view_view_order_form_form" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="pricelist_id" position="after">
+                <field name="allow_credit" invisible="1"/>
+                <field name="z_check_limiit" invisible="1"/>
+                <field name="z_check_approve" invisible="1"/>
+                <field name="credit_days" invisible="1"/>
+                <field name="credit_limits" invisible="1"/>
+                <field name="sale_last_30_days" invisible="1"/>
+                <field name="sale_amount" invisible="1"/>
+            </field>
+            <xpath expr="//form/sheet/group/group[2]" position="after">
+                <group>
+                    <field name="next_payment_date"/>
+                    <field name="next_payment_amt"/>
+                </group>
+            </xpath>
+
+           <!--  <xpath expr="//form/header/button[8]" position="replace">
+                <button name="action_confirm" string="Confirm" class="btn-primary" type="object"
+                        attrs="{'invisible': [('state', 'in', ['sent','done','cancel','sale'])]}"
+                         /> 
+            </xpath> -->
+            <!-- <xpath expr="//form/header/field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,sent,waiting_for_approval,sale"/>
+            </xpath> -->
+            <button name='action_confirm' position='after'>
+                <button name='action_approval' string='Check Credit Limit' class="btn-primary" type="object" attrs="{'invisible': [('state', 'in', ['sale','done','cancel','to approve','revised','sent','draft','credit'])]}"/>
+            </button>
+            <button name='action_confirm' position='after'>
+                <button name='over_credit' string='Allow Credit Limit' class="btn-primary" type="object" attrs="{'invisible': [('state', 'in', ['credit','sale','done','cancel','to approve','revised','sent','draft','to_confirm','approved'])]}"/>
+                <button name='action_info' string='Credit Limit Information' class="btn-primary" type="object" attrs="{'invisible': [('state', 'in', ['credit','sale','done','cancel','to approve','revised','sent','draft','to_confirm','approved'])]}"/>
+            </button>
+            <field name="payment_term_id" position="after">
+                <field name="user_id"  string="Primary Salesperson"/>
+                <field name="z_user_id"  />
+                <!-- <field name="warehouse_id" /> -->
+            </field>
+
+
+        </field>
+    </record>
+
+    <!-- <record id="view_move_due_inherit" model="ir.ui.view">
+            <field name="name">account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="journal_id" position="after">
+                    <field name="due_date" invisible='1' />                    
+                </field>
+            </field>
+        </record> -->
+        <record id="view_credit_date_inherit" model="ir.ui.view">
+            <field name="name">account.move.form.view</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="journal_id" position="after">
+                    <field name="credit_date" invisible='1' />
+                    <field name="credit_last_30_days" invisible='1'/>                   
+                </field>
+            </field>
+        </record>
+
+</odoo>

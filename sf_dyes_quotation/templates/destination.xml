@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+      <record id="sales_proforma" model="ir.ui.view">
+        <field name="name">destination.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="destination"/>
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send']" position="after">
+                <button name="print_sfdyes_quotation" string="SFdyes Quotation" type="object" states="draft,sent,to approve,approved,waiting_for_approval,credit,to_confirm" class="oe_highlight" groups="base.group_user"/>
+                <button name="print_sfdyes_promo_quotation" string="SFdyes Pro-Forma Invoice" type="object" states="credit,sale" class="oe_highlight" groups="base.group_user"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
