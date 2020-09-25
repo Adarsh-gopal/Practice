@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	
+		<record id="indent_form_view_inventory" model="ir.ui.view">
+		    <field name="name">stock.indent.order.form</field>
+		    <field name="model">stock.indent.order</field>
+		    <field name="arch" type="xml">
+		        <form string="Stock Material Requisition Views">
+		        	<header>
+		        		<button name="button_indent_confirm" type="object" class="btn-primary" string="Confirm Material Requisition" attrs="{'invisible': [('state','not in',('draft'))]}"/>
+		        		<button name="button_indent_confirm_approve" type="object" class="btn-primary" string="Approve Material Requisition" attrs="{'invisible': [('state','not in',('waiting_approval'))]}"/>
+		        		<button name="button_indent_transfer" string="Ready To Transfer" type="object"	class="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}" invisible="1"/>
+		        		<!-- <button name="indent_transfer_move_confirm_new" string="Confirm Transfer" type="object" clsass="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}"/> -->
+		        		<button name="indent_cancel" string="Cancel" type="object" clsass="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}"/>
+		        		<button name="indent_reject" string="Reject" type="object" clsass="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}"/>
+	                    <field name="state" widget="statusbar" />
+	                </header>
+		        	<sheet>
+		        		<h1>
+							<field name="name" class="oe_inline" readonly="1"/>
+						</h1>
+						<!-- <label for="origin_swap" string="Check if this Material Requisition is for Maintenance Order"/> 
+						<field name="origin_swap"/> -->
+			            
+			            <group>
+			                <group>
+			                	<field name="order_type"/>
+			                	<!-- <field name="maintenance_order_origin" attrs="{'invisible': [('order_type','=','mrp')]}"/> -->
+			                	<field name="mrp_order_ids" domain="[('state' ,'=','confirmed')]"  options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('order_type','!=','mrp')]}" />
+			                	<field name="stock_source"/>
+			                	<field name="origin_swap_cond" invisible="1"/>
+			                	<field name="partner_id" invisible="1"/>
+			                    <!-- <field name="requirement_id"/> -->
+			                    <field name="requested_id"/>
+			                    
+			                </group>
+			                <group>
+			                	<field name="picking_type_id" required='1' />
+			                    <field name="indent_date"/>
+			                    <field name="require_date"/>
+			                    <field name="approve_date"/>
+			                    <!-- <field name="analytic_account_id" /> -->
+					            <!-- <field name="location_dest_id"/> -->
+			                </group>
+			            </group>
+			            <notebook>
+			            	<page name="indent_product_list_stock" string="Products">
+					            <field name="product_lines">
+					                <tree string="Material Requisition Order Lines" editable="bottom">
+					                    <field name="product_id" context="{'partner_id': parent.partner_id}" attrs="{'readonly': [('id', '!=', False)]}"/>
+					                    <field name="product_uom_qty"/>
+					                    <field name="product_uom_qty_reserved" invisible="1"/>
+					                    <field name="product_uom" string="Unit" />
+					                    <field name="location_id"/>
+					                    <field name="location_dest_id"/>
+					                    <field name="state" invisible="1"/>
+					                </tree>
+					            </field>
+					        </page>
+
+					        <!-- <page string="Other Info">
+								<group>
+									<group>
+										<field name="stock_source" />
+										<field name="maintenance_order_origin" attrs="{'invisible': [('origin_swap','=',False)]}"/>
+									</group>
+								</group>
+							</page> -->
+			        	</notebook>
+			        </sheet>
+			        <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="activity_ids" widget="mail_activity"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+		        </form>
+		    </field>
+		</record>
+
+		<record model="ir.ui.view" id="indent_form_tree_inventory">
+            <field name="name">Stock Indent tree view</field>
+            <field name="model">stock.indent.order</field>
+            <field name="arch" type="xml">
+                <tree string="Material Requisition">
+                    <field name="name"/>
+                    <field name="stock_source"/>
+                    <field name="issued_by" />
+                    <field name="indent_date" />
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="maintenance_order_indent_form_tree_inventory">
+            <field name="name">Stock Indent tree view</field>
+            <field name="model">stock.indent.order</field>
+            <field name="arch" type="xml">
+                <tree string="Material Requisition">
+                    <field name="name"/>
+                    <!-- <field name="maintenance_order_origin"/> -->
+                    <field name="issued_by" />
+                    <field name="indent_date" />
+                </tree>
+            </field>
+        </record>
+
+		
+		<record model="ir.actions.act_window" id="indent_form_action_view_inventory">
+			<field name="name">Material Requisition</field>
+			<field name="res_model">stock.indent.order</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<record  model="ir.actions.act_window" id="maintenance_order_indent_form_action_view_active">
+			<field name="name">Material Requisition</field>
+			<field name="res_model">stock.indent.order</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_ids" eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('maintenance_order_indent_form_tree_inventory')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('indent_form_view_inventory')})]"/>
+		</record>
+
+
+		<menuitem id="indent_main_menu_inventory" name="Material Requisition" parent="stock.menu_stock_root"/>
+		<menuitem action="indent_form_action_view_inventory" id="indent_main_menu_child_inventory" name="Material Requisition" parent="indent_main_menu_inventory"/>
+
+</odoo>
