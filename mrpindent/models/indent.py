@@ -142,7 +142,7 @@ class IndentOrder(models.Model):
             'date': self.date_order,
             'origin': self.name,
             'location_dest_id': self.location_dest_id.id,
-            'z_analytic_account_id': self.analytic_account_id.id,
+            #'analytic_account_id': self.z_analytic_account_id.id,
             'location_id': self.location_id.id,
             'company_id': self.company_id.id,
         }
