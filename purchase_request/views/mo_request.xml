@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+    	<!-- <record id="inherit_skit_mrp_production_view_form" model="ir.ui.view">
+            <field name="name">inherit.skit.mrp.production.view.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml"> -->
+            	<!-- <button name="button_maintenance_req" position="after">
+	                <button name="button_po_request" type="object" string="CREATE PUR REQ" class="oe_highlight" attrs="{'invisible': [('z_check_order_1','=', 'Close')]}"/>
+	            </button> -->
+            	<!-- <div class="oe_button_box" name="button_box">
+                    <button type="action" class="oe_inline oe_stat_button" name="%(skit_po_request.purchase_form_action_view_active)d" icon="fa-bars"  string="PO Request"/>
+                    <field name="z_associate_count" widget="statinfo"/>
+                </div> -->
+                <!-- <xpath expr="//sheet/notebook/page[1]//field[@name='move_raw_ids']/tree/field[@name='product_id']" position="after">
+                    <field name="z_purchase_check" invisible="1"/>
+                </xpath>
+                <field name="origin" position="after">
+                    <field name="z_check_order" invisible="1"/>
+                    <field name="z_check_order_1" invisible="1"/>
+                    <field name="z_sale_order_id"/>
+                </field>
+            </field>
+            </record>
+
+            <record id="inherit_skit_mrp_production_tree_view" model="ir.ui.view">
+                <field name="name">inherit.skit.mrp.production.tree.view</field>
+                <field name="model">mrp.production</field>
+                <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+                <field name="arch" type="xml">
+                    <field name="origin" position="after">
+                        <field name="z_sale_order_id"/>
+                    </field>
+                </field>
+            </record> -->
+            <!-- <record id="stockinherit_skit_mrp_production_view_form" model="ir.ui.view">
+                <field name="name">inherit.skit.mrp.production.view.form</field>
+                <field name="model">stock.move</field>
+                <field name="priority">1000</field>
+                <field name="inherit_id" ref="mrp.view_stock_move_raw_tree"/>
+                <field name="arch" type="xml">
+                    <field name="product_id" position="after">
+                        <field name="z_purchase_check" invisible="1"/>
+                    </field>
+
+                </field>
+            </record> -->
+            <!-- <record id="purchase_order_server_action" model="ir.actions.server">
+                <field name="name">Mrp: Purchase Request</field>
+                <field name="model_id" ref="mrp.model_mrp_production"/>
+                <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+                <field name="state">code</field>
+                <field name="code">
+if records:
+    action = records.button_po_request()
+        </field>
+            </record> -->
+        
+        <!-- <record id="inherit_purchase_request_type_form" model="ir.ui.view">
+            <field name="name">purchase.request.type.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="z_order_line_id"/>
+                </field>
+                <xpath expr="//sheet/notebook/page[2]" position="after">
+                    <page string="PR Approval Matrix">
+                        <field name="z_order_line_id">
+                            <tree string = "PR Approval Matrix" editable = "bottom">
+                                <field name="z_purchase_request_type" widget="selection"/>
+                                <field name="z_approval_line_id" widget="selection"/>
+                                <field name="levels" widget="selection"/>
+                                <field name="z_analytic_account" widget="many2one"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record> -->
+    </data>
+</odoo>
