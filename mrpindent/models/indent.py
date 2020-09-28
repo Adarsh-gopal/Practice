@@ -51,7 +51,7 @@ class IndentOrder(models.Model):
     status1 = fields.Char(string="Status")
     mrp_order_ids = fields.Many2one('mrp.production','Manufacturing Order No.')
     stock_source = fields.Char(string='Source Document' ,store=True)
-    # analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
+    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
     order_type = fields.Selection(
             [('mrp', 'Manufacturing'),
              ('maintenance', 'Maintenance')
@@ -68,12 +68,12 @@ class IndentOrder(models.Model):
         if self.order_type == 'mrp':
             for each_rec in self.mrp_order_ids:
                 mrp_rec_id = self.env['mrp.production'].search([('id','=',each_rec.id)])
-                # self.analytic_account_id = mrp_rec_id.analytic_account_id.id
+                self.analytic_account_id = mrp_rec_id.analytic_account_id.id
                 for line in mrp_rec_id.move_raw_ids:
                     vals ={
                     'product_id': line.product_id.id,
                     'product_uom': line.product_id.uom_id.id,
-                    # 'z_analytic_account_id': self.analytic_account_id.id,
+                    'z_analytic_account_id': self.analytic_account_id.id,
                     'product_uom_qty' : line.product_uom_qty-line.reserved_availability,
                     'mrp_indent_product_line_id':self.id,}
                     self.product_lines = [(0, 0, vals)]
@@ -142,7 +142,7 @@ class IndentOrder(models.Model):
             'date': self.date_order,
             'origin': self.name,
             'location_dest_id': self.location_dest_id.id,
-            #'analytic_account_id': self.z_analytic_account_id.id,
+            'z_analytic_account_id': self.analytic_account_id.id,
             'location_id': self.location_id.id,
             'company_id': self.company_id.id,
         }
@@ -395,7 +395,7 @@ class IndentOrderLine(models.Model):
     product_uom = fields.Many2one('uom.uom', string='Unit of Measure')
     location_id = fields.Many2one('stock.location', string='Source Location')
     location_dest_id = fields.Many2one('stock.location', string='Destination Location')
-    # z_analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
+    z_analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
     move_ids = fields.One2many('stock.move', 'indent_line_id', string='Reservation', readonly=True, ondelete='set null', copy=False)
     
 
@@ -412,11 +412,11 @@ class IndentOrderLine(models.Model):
     def get_uom(self):
         self.product_uom = self.product_id.uom_id.id
 
-    # @api.onchange('product_id')
-    # def get_analytic(self):
-    #     for l in self:
-    #         for line in l.mrp_indent_product_line_id:
-    #             l.z_analytic_account_id = line.analytic_account_id.id
+    @api.onchange('product_id')
+    def get_analytic(self):
+        for l in self:
+            for line in l.mrp_indent_product_line_id:
+                l.z_analytic_account_id = line.analytic_account_id.id
 
 
     def _create_stock_moves(self, picking):
@@ -443,7 +443,7 @@ class IndentOrderLine(models.Model):
             'name': self.product_id.name,
             'product_id': self.product_id.id,
             'product_uom': self.product_id.uom_id.id,
-            # 'analytic_account_id': self.z_analytic_account_id.id,
+            'analytic_account_id': self.z_analytic_account_id.id,
             'location_id': self.mrp_indent_product_line_id.location_id.id,
             'location_dest_id': self.mrp_indent_product_line_id.location_dest_id.id,
             'picking_id': picking.id,

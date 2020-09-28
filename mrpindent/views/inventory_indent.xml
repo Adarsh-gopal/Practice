@@ -39,7 +39,7 @@
 			                    <field name="indent_date"/>
 			                    <field name="require_date"/>
 			                    <field name="approve_date"/>
-			                    <!-- <field name="analytic_account_id" /> -->
+			                    <field name="analytic_account_id" />
 					            <!-- <field name="location_dest_id"/> -->
 			                </group>
 			            </group>

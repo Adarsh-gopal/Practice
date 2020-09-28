@@ -15,8 +15,5 @@
             <field name="prefix">INV-IND-%(year)s/</field>
             <field name="code">stock.indent.order</field>
         </record>
-        <record model="res.groups" id="group_material">
-            <field name="name">Approve Material Requisition</field>
-        </record>
     </data>
 </odoo>

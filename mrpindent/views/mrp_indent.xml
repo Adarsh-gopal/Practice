@@ -8,7 +8,7 @@
 		        <form string="Material Requisition Views" delete="false" duplicate='0'>
 		        	<header>
 		        		<button name="button_indent_confirm" type="object" class="btn-primary" string="Confirm Material Requisition" attrs="{'invisible': [('state','not in',('draft'))]}"/>
-		        		<button name="button_indent_confirm_approve" type="object" class="btn-primary" string="Approve Material Requisition" attrs="{'invisible': [('state','not in',['waiting_approval' ,'inprogress'])]}" groups='mrpindent.group_material'/>
+		        		<button name="button_indent_confirm_approve" type="object" class="btn-primary" string="Approve Material Requisition" attrs="{'invisible': [('state','not in',['waiting_approval' ,'inprogress'])]}"/>
 		        		<button name="button_indent_transfer" string="Ready To Transfer" type="object"	class="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}" invisible="1"/>
 		        		<button name="indent_transfer_move_confirm_new" string="Confirm Transfer" type="object" clsass="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}"/>
 		        		<button name="indent_cancel" string="Cancel" type="object" clsass="oe_highlight" groups="stock.group_stock_manager" attrs="{'invisible': [('state','not in',('inprogress'))]}"/>
@@ -28,7 +28,7 @@
 			                    <field name="mrp_order_ids"/>
 			                    <field name="stock_source"/>
 			                    <field name="picking_type_id"/>
-			                    <!-- <field name="analytic_account_id"/> -->
+			                    <field name="analytic_account_id"/>
 					            <!-- <field name="location_dest_id"/> -->
 			                    <field name="company_id" groups="base.group_multi_company"/>
 			                </group>
@@ -49,7 +49,7 @@
 					                	<!-- <field name="sequence" /> -->
 					                    <field name="product_id" context="{'partner_id': parent.partner_id}"/>
 					                    <field name="product_uom"/>
-					                    <!-- <field name="z_analytic_account_id"/> -->
+					                    <field name="z_analytic_account_id"/>
 					                    <field name="product_uom_qty"/>
 					                    <field name="product_uom_qty_reserved" invisible="1"/>
 					                    <field name="product_uom" string="Unit" groups="product.group_uom"/>

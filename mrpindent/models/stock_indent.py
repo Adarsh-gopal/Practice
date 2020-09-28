@@ -60,7 +60,7 @@ class IndentOrder(models.Model):
     location_id = fields.Many2one('stock.location', string='Source Location')
     location_dest_id = fields.Many2one('stock.location', string='Destination Location')
     requested_id = fields.Many2one('res.users', string='Requested By', default=lambda self: self.env.user.id)
-    # analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
+    analytic_account_id = fields.Many2one('account.analytic.account', string='Analytic Account')
 
 
 
@@ -75,7 +75,7 @@ class IndentOrder(models.Model):
         if self.order_type == 'mrp':
             for each_rec in self.mrp_order_ids:
                 mrp_rec_id = self.env['mrp.production'].search([('id','=',each_rec.id)])
-                # self.analytic_account_id = mrp_rec_id.analytic_account_id.id
+                self.analytic_account_id = mrp_rec_id.analytic_account_id.id
                 for line in mrp_rec_id.move_raw_ids:
                     vals ={
                     'product_id': line.product_id.id,
