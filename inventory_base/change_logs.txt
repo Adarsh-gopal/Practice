@@ -1,9 +1,0 @@
-13.0.1.0 --> 13.0.1.1
-
-Date-03 July 2020
-By- Aniruddh Sisodia
-Affected files- product_group.xml
-List of changes-
-    1)name field (Description) made mandetory on Group Master Trees
-
-

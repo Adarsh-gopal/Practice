@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_payment_custom,payment.custom,model_payment_custom,base.group_user,1,1,1,1
-access_step_discription,step.discription,model_step_discription,mrp.group_mrp_user,1,1,1,1
-access_temp_description,temp.description,model_temp_description,mrp.group_mrp_user,1,1,1,1
