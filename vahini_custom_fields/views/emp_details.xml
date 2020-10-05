@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="manage_form_rank_inherited">
+			<field name="name">manage.form.emp.rank</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="birthday" position="after">
+        				<field name="blood_group"  string="Blood Group"/>   
+            	</field> 
+				<field name="work_phone" position="after">
+					<field name="joining_date"/>
+					<field name="date_of_resignation"/>
+					<field name="date_of_relieving"/>
+				</field>
+				<field name="identification_id" position="after">
+					<field name="epf_uan_no"/>
+					<field name="esi_number"/>						
+				</field>
+				<field name="gender" position="after">
+					<field name="age"/>
+					<field name="caste"/>
+					<field name="religion"/>
+					<field name="handicap"/>
+					<field name="height"/>
+					<field name="weight"/>
+					<field name="personal_mark_of_identification"/>
+				</field>
+				<field name="address_home_id" position="after">
+					<label for="street" string=" Alternative Address"/>
+					<div class="o_address_format">
+						<field name="street" placeholder="Street..." class="o_address_street"/>
+                        <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                        <field name="city" placeholder="City" class="o_address_city"/>
+                        <field name="state" class="o_address_state" placeholder="State" options="{&quot;no_open&quot;: True}"/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                        <field name="country" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True}"/>
+                    </div>
+				</field>
+				<page name="personal_information" position="inside">
+					<group>
+						<group string="Eye Sight">
+							<field name="righteye"/>
+							<field name="lefteye"/>
+							<field name="total_no_of_dependents"/>
+						</group>
+					</group>
+					<group>
+						<group string="Vehicle Details">
+							<field name="registeration_number"/>
+							<field name="driving_license"/>
+						</group>
+					</group>
+				</page>
+				<notebook>
+					<page name="language_known" string="Languages Known">
+						<field name="one" widget="one2many_list">
+							<tree string="Language" editable="bottom">
+								<field name="languages"/>
+					            <field name="rite"/>
+					            <field name="wr"/>
+					            <field name="speak"/>
+					        </tree>
+					    </field>
+					</page>
+				</notebook>
+				<notebook>
+					<page name="employees_family_details" string="Employee Family Details">
+						<field name="two" widget="one2many_list">
+							<tree string="edu_details_id" editable="bottom">
+								<field name="relation"/>
+								<field name="name"/>
+					            <field name="the_age"/>
+					            <field name="qualification"/>
+					            <field name="occupation"/>
+					        </tree>
+					    </field>
+					</page>
+				</notebook>
+				<notebook>
+					<page name="employees_edu_details" string="Employee Education Details">
+						<field name="three" widget="one2many_list">
+							<tree string="Education" editable="bottom">
+								<field name="qualification"/>
+					            <field name="college"/>
+					            <field name="year_of_passing"/>
+					            <field name="percentage"/>
+					        </tree>
+					    </field>
+					</page>
+				</notebook>
+				<notebook>
+					<page name="employees_exp_details" string="Previous Experience Details">
+						<field name="four" widget="one2many_list">
+							<tree string="Experience" editable="bottom">
+								<field name="period_from"/>
+					            <field name="period_to"/>
+					            <field name="organization"/>
+					            <field name="designation"/>
+					            <field name="ctc"/>
+					            <field name="reason_for_leaving"/>
+					        </tree>
+					    </field>
+					</page>
+				</notebook>
+				<field name="user_id" position="after">
+					<field name="esi_applicable"/>
+					<field name="vpf_applicable"/>
+					<field name="vpf_amount" attrs="{ 'invisible': [('vpf_applicable', '=',False)]}"/>
+				</field>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="qual_for_inherited_function">
+			<field name="name">qual.for.function</field>
+			<field name="model">qual.name</field>
+			<field name="arch" type="xml">
+				<form string="Qualification">
+					<group>
+						<field name="name"/>
+					</group>
+			    </form>
+		    </field>
+	    </record>
+	    <record model="ir.ui.view" id="qick_for_inherited_function">
+			<field name="name">qick for function</field>
+			<field name="model">qualify.name</field>
+			<field name="arch" type="xml">
+				<form string="Qualification">
+					<group>
+						<field name="name"/>
+					</group>
+			    </form>
+		    </field>
+	    </record>
+	    <record model="ir.ui.view" id="castm_for_inherited_function">
+			<field name="name">castm.for.function</field>
+			<field name="model">cas.name</field>
+			<field name="arch" type="xml">
+				<form string="Language">
+					<group>
+						<field name="name"/>
+					</group>
+			    </form>
+		    </field>
+	    </record>
+	    <record model="ir.ui.view" id="designation_for_inherited_function">
+			<field name="name">designation for function</field>
+			<field name="model">designation.name</field>
+			<field name="arch" type="xml">
+				<form string="Designation">
+					<group>
+						<field name="name"/>
+					</group>
+			    </form>
+		    </field>
+	    </record>
+	    <record model="ir.ui.view" id="manage_for_inherited_function">
+	    	<field name="name">manage.for.function</field>
+			<field name="model">reli.name</field>
+			<field name="arch" type="xml">
+				<form string="Religion">
+					<group>
+						<field name="name"/>
+					</group>
+			    </form>
+		    </field>
+	    </record>
+	    <record model="ir.ui.view" id="relation_for_inherited_function">
+			<field name="name">relation.for.function</field>
+			<field name="model">relation.name</field>
+			<field name="arch" type="xml">
+				<form string="Relations">
+					<group>
+						<field name="name"/>
+					</group>
+			    </form>
+		    </field>
+	    </record>
+	    <record model="ir.ui.view" id="reason_for_inherited_function">
+			<field name="name">reason.for.function</field>
+			<field name="model">reason.name</field>
+			<field name="arch" type="xml">
+				<form string="Reasons">
+					<group>
+						<field name="name"/>
+					</group>
+			    </form>
+		    </field>
+		</record>
+	</data>
+</odoo>

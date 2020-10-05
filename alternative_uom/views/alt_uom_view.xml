@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+		<record id="inherit_product_template_only_form_view" model="ir.ui.view">
+	        <field name="name">product.template.only.form</field>
+	        <field name="model">product.template</field>
+	        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+	        <field name="arch" type="xml">
+	        
+                        	
+			        		<field name="uom_po_id" position="after">
+			        			<field name="alternate_uom" string="Alternate UOM"  groups="uom.group_uom" options="{'no_create': True}"/>
+                                <field name="conversion" string="Conversion"  groups="uom.group_uom" options="{'no_create': True}"/>
+                                <field name="alternate_uom_update" string="Alternate UOM Update" invisible="1"/>
+                                <field name="z_package" string="Package UOM"  groups="uom.group_uom"/>
+                                <field name="z_package_ratio" string="Package Quantity" groups="uom.group_uom"/>
+                           
+			        		</field>
+                        
+	        
+	        </field>
+	    </record>
+	    <record model="ir.ui.view" id="view_stock_quant_form_inherit">
+        <field name="name">stock.quant.form</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_form"/>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+
+        	<field name="reserved_quantity" position="after">
+        		<field name="quantity_alt_uom"/>
+        		<field name="conversion_prod"/>
+        	</field>
+        </field>
+    </record>
+
+	    <record model="ir.ui.view" id="view_stock_quant_tree_inherit">
+        <field name="name">stock.quant.tree</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree"/>
+        <field name="arch" type="xml">
+            <tree>
+                
+                <field name="quantity" position="before"/>
+                <field name="quantity_alt_uom" sum="quantity"/>
+                <field name="alternate_uom"/>
+               
+            </tree>
+        </field>
+    </record>
+	</data>
+</odoo>

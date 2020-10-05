@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    	<record id="gateentry_check_view" model="ir.ui.view">
+    		<field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse"/>
+    		<field name="arch" type="xml">
+    			<field name="partner_id" position="after">
+                    <field name="gate_entry_required"/>
+                </field>
+    		</field>
+    	</record>
+
+        <record id="gateentry_select_view" model="ir.ui.view">
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <field name="origin" position="after">
+                    <field name="sale_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                    <field name="purchase_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                </field>
+                <field name="partner_id" position="after">
+                    <field name="gate_entry_attach_inward" attrs="{'required': [('gate_check_inward','=', True),('gate_check_internal','=', False)],'invisible':[('gate_check_outward','=',True)]}" options="{'no_create': True, 'no_create_edit':True}"/>
+                    <field name="gate_entry_attach_outward" attrs="{'invisible':[('gate_check_inward','=',True)]}" options="{'no_create': True, 'no_create_edit':True}"/>
+                    <field name="gate_check_inward" invisible="1"/>
+                    <field name="gate_check_outward" invisible="1"/>
+                    <field name="gate_check_internal" invisible="1"/>
+                    <field name="z_vehicle_no" options="{'no_create': True, 'no_create_edit':True}" attrs="{'invisible':[('gate_check_inward','=',True)]}"/>
+                    <field name="z_driver" options="{'no_create': True, 'no_create_edit':True}" attrs="{'invisible':[('gate_check_inward','=',True)]}"/>
+                    <field name="z_cleaner" options="{'no_create': True, 'no_create_edit':True}" attrs="{'invisible':[('gate_check_inward','=',True)]}"/>
+                </field>
+                
+            </field>
+        </record>
+    </data>
+</odoo>

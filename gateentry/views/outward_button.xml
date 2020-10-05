@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="gateentry.outward_button">
+        <field name="name">Sale button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <div class="oe_button_box" name="button_box">
+               <button type="action" class="oe_stat_button"
+                icon="fa-pencil-square-o" name="%(gateentry.action_type_outward)d" string="Outward Entry" />
+            </div>
+        </field>
+    </record>
+</odoo>

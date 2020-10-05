@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="ir.module.category" id="gateentry_category" >
+            <field name="name">Gateentry</field>
+            <field name="sequence">1</field>
+        </record>
+        <record  model="res.groups" id="group_gateentry_user">
+            <field name="name">User</field>
+            <field name="category_id" ref="gateentry.gateentry_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+        <record model="res.groups" id="group_gateentry_manager">
+            <field name="name">Manager</field>
+            <field name="implied_ids" eval="[(4, ref('gateentry.group_gateentry_user'))]"/>
+            <field name="category_id" ref="gateentry.gateentry_category"/>
+        </record>
+
+    </data>
+</odoo>

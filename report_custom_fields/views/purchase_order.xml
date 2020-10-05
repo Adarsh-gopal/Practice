@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    	<record id="view_remark_form" model="ir.ui.view">
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                
+                <field name="date_order" position="after">
+                    <field name="ext_doc_num" string="External Document Number"/>
+                    <field name="order_type" />      
+                </field>  
+                <field name="notes" position="after">
+                    <field name="remark" placeholder="Remarks ..."/>
+                </field>                             
+            </field>    
+        </record>
+        
+        <record model="ir.ui.view" id="names_form_purchase">
+            <field name="name">purchase order type</field>
+            <field name="model">purchase.order.type</field>
+            <field name="arch" type="xml">
+                <form string = "Order type">
+                    <group>
+                        <field name="name" placeholder="type" string = "Type"/>
+                        <field name="description" placeholder="description"/>
+                    </group>
+                </form>  
+            </field>               
+        </record>
+        <record model="ir.actions.act_window" id="action_courses_purchase">
+            <field name="name">purchase production type</field>
+            <field name="res_model">purchase.order.type</field>
+            <field name="view_mode">form</field>
+        </record>
+    </data>
+</odoo>

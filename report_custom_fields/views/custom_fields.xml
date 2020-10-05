@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="custom_field_crm_form">
+            <field name="name">Custom Demo</field>
+            <field name="model">custom.fields.crm</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_custom_field_crm">
+            <field name="name">sequence</field>
+            <field name="res_model">custom.fields.crm</field>
+            <field name="view_mode">form</field>
+        </record>
+        
+        <record model="ir.ui.view" id="custom_form">
+            <field name="name">custom fields form view</field>
+            <field name="model">custom.fields</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                    </group>    
+                </form>    
+            </field>               
+        </record>
+        <record model="ir.ui.view" id="custom_tree">
+            <field name="name">custom fields tree view</field>
+            <field name="model">custom.fields</field>
+            <field name="arch" type="xml">
+                <tree string="field">
+                    <field name="name"/>
+                </tree>   
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_custom_fields">
+            <field name="name">custom fields</field>
+            <field name="res_model">custom.fields</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>    

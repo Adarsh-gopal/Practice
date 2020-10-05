@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+,,,,,,,
+access_indent_order_user,indent.order,model_indent_order,mrp.group_mrp_user,1,1,1,0
+access_indent_order_manager,indent.order,model_indent_order,mrp.group_mrp_manager,1,1,1,1
+,,,,,,,
+access_indent_order_line_user,indent.order.line,model_indent_order_line,mrp.group_mrp_user,1,1,1,0
+access_indent_order_line_manager,indent.order.line,model_indent_order_line,mrp.group_mrp_manager,1,1,1,1
+,,,,,,,
+access_indent_order_line _user,stock.indent.order,model_stock_indent_order,stock.group_stock_user,1,1,1,0
+access_indent_order_line _manager,stock.indent.order,model_stock_indent_order,stock.group_stock_manager,1,1,1,1
+,,,,,,,
+access_stock_indent_order_line _user,stock.indent.order.line ,model_stock_indent_order_line,stock.group_stock_user,1,1,1,0
+access_stock_indent_order_line _manager,stock.indent.order.line ,model_stock_indent_order_line,stock.group_stock_manager,1,1,1,1

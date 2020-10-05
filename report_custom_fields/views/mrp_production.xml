@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="order_type">
+            <field name="name">mrp production</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>    
+            <field name="arch" type="xml">
+                    <field name="origin" position="after">
+                        <field name="order_type" />
+                    </field>             
+            </field>                   
+        </record>
+        <record model="ir.ui.view" id="names_form">
+            <field name="name">mrp production type</field>
+            <field name="model">mrp.production.type</field>
+            <field name="arch" type="xml">
+                <form string ="Order type">
+                    <group>
+                        <field name="name" placeholder="type" string = "Type"/>
+                        <field name="description" placeholder="description"/>
+                    </group>
+                </form>  
+            </field>               
+        </record>
+        <record model="ir.actions.act_window" id="action_courses">
+            <field name="name">mrp production type</field>
+            <field name="res_model">mrp.production.type</field>
+            <field name="view_mode">form</field>
+        </record>
+    </data>
+</odoo> 

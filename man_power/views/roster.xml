@@ -1,0 +1,115 @@
+<odoo>
+	<data>
+		<record id="view_roster_tree" model="ir.ui.view">
+            <field name="name">roster.system.tree</field>
+            <field name="model">roster.system</field>
+            <field name="arch" type="xml">
+                <tree string="Roster attendances">
+                	<field name="name"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="roster_view_form" model="ir.ui.view">
+            <field name="name">Roster No</field>
+            <field name="model">roster.system</field>
+            <field name="arch" type="xml">
+                <form string="Roster attendances">
+                    <sheet>
+                        <group>
+                        	<field name="name"/>
+                        	<field name="from_date" string="From Date"/>
+                            <field name="to_date" string="To Date"/>
+                        </group>
+                        <notebook>
+                        	<page name="public" string="Roster Data">
+                        		<field name="one_line" widget="one2many_list">
+                        			<tree editable="bottom">
+                                        <field name="employee_type"/>
+	                        			<field name="category_types"/>
+                                        <field name="name" options="{'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="operator_name"/>
+                        				<field name="from_date" string="From Date"/>
+                        				<field name="to_date" string="To Date"/>
+	                        			<field name="days"/>
+                        			</tree>
+                        		</field>
+                        	</page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="calender_view_form" model="ir.ui.view">
+        	<field name="model">roster.system</field>
+        	<field name="arch" type="xml">
+        		<calendar date_start="from_date" date_stop="to_date" color="name">
+        			<field name="name"/>
+        		</calendar>
+        	</field>
+        	
+        </record>
+        <record id="gantt_view" model="ir.ui.view">
+            <field name="name">roster.system.gantt</field>
+            <field name="model">roster.system</field>
+            <field name="arch" type="xml">
+                <gantt
+                	date_start="from_date"
+                	date_stop="to_date"
+                	string="Day(s)"
+                />
+            </field>
+        </record>
+        <record id="roster_action" model="ir.actions.act_window">
+            <field name="name">Roster</field>
+            <field name="res_model">roster.system</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form,gantt,calendar</field>
+            
+        </record>
+        <menuitem id="menu_view_roster" name="Roster" parent="man_power.man_power_menu" action="roster_action"/>
+        <menuitem name="Roster" id="roster_root" parent="mrp.menu_mrp_root" action="roster_action"/>
+
+<!--        <record id="form_view" model="ir.ui.view">
+        	<field name="name">roster.system.form</field>
+        	<field name="model">roster.employee</field>
+        	<field name="arch" type="xml">
+        		<form>
+        			<sheet>
+	        			<field name="name"/>
+	        			<field name="from_date"/>
+	        			<field name="to_date"/>
+	        		</sheet>
+        		</form>
+        	</field>
+        </record>
+        <record id="tree_view" model="ir.ui.view">
+        	<field name="name">roster.system.tree</field>
+        	<field name="model">roster.employee</field>
+        	<field name="arch" type="xml">
+        		<tree>
+        			<field name="name"/>
+        		</tree>
+        	</field>
+        </record>
+        <record id="calendar_view" model="ir.ui.view">
+        	<field name="name">roster.system.calendar</field>
+        	<field name="model">roster.employee</field>
+        	<field name="arch" type="xml">
+        		<calendar date_start="from_date" date_stop="to_date">
+        			<field name="name"/>
+        		</calendar>
+        	</field>
+        </record>
+        <record id="roster_inaction" model="ir.actions.act_window">
+            <field name="name">Roster</field>
+            <field name="res_model">roster.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            
+        </record>
+        <menuitem id="menu_view_form" name="Form" parent="man_power.man_power_menu" action="roster_inaction"/>-->
+        
+	</data>
+</odoo>

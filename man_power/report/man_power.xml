@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<report id="action_report_man_power"
+		name="man_power.man_power_template"
+		model="roster.system"
+		string="Shift Summary"
+		report_type="qweb-pdf" />
+
+    <record id="action_report_man_power" model="ir.actions.report">
+        <field name="paperformat_id" ref="man_power.paperformat_summary"/>
+    </record>    
+
+	
+</odoo>

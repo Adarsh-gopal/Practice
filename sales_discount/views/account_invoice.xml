@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Eficent Business and IT Consulting Services S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record id="invoice_form_customer_inherit" model="ir.ui.view">
+        <field name="name">account.invoice.supplier.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <button name="action_post" position="after">
+                <button name="invoice_lines_create_discount" type="object" string="Calculate Total Amount" groups="account.group_account_invoice" class="oe_highlight" attrs="{'invisible': [('display_button', '=',False)]}"
+                    />
+            </button>
+            <field name='journal_id' position='after'>
+                <field name='check_button' invisible="1"/>
+            </field>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="after">
+                   <field name="category_ids" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="before">
+                <field name="dis_price_unit"/>
+                <field name="trade_discount_id" widget="many2many_tags" options="{'no_create': True}" invisible="1"/>
+                <field name="trade_amount" invisible="1"/>
+                <field name="trade_discount"/>
+                <field name="quantity_discount_id" widget="many2many_tags" options="{'no_create': True}" invisible="1"/>
+                <field name="quantity_amount" invisible="1"/>
+                <field name="quantity_discount"/>
+                <field name="special_discount_id" widget="many2many_tags" options="{'no_create': True}" invisible="1"/>
+                <field name="special_amount" invisible="1"/>
+                <field name="special_discount"/>
+            </xpath>
+            <xpath expr="//field[@name='amount_untaxed']" position="before">
+                <field name="gross_sales" attrs="{'invisible': [('cal_done', '=',False)]}"/>
+                <field name="trade_dis" attrs="{'invisible': ['|',('trade_dis', '=', 0.00),('cal_done', '=',False)]}"/>
+                <field name="quantity_dis" attrs="{'invisible': ['|',('quantity_dis', '=', 0.00),('cal_done', '=',False)]}"/>
+                <field name="special_dis" attrs="{'invisible': ['|',('special_dis', '=', 0.00),('cal_done', '=',False)]}"/>
+                <field name="cal_done" invisible="1"/>
+                <field name="display_button" invisible="1"/>
+                <!--<field name="invoice_lines" invisible="1"/>-->
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="replace">
+              <field name="price_unit" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']" position="replace">
+              <field name="price_subtotal" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='price_subtotal']" position="replace">
+              <field name="price_subtotal" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='price_subtotal']" position="after">
+              <field name="dis_price_unit" invisible='1'/>
+              <field name="category_ids" invisible='1'/>
+              <field name="trade_discount_id" widget="many2many_tags" options="{'no_create': True}" invisible='1'/>
+              <field name="trade_amount" invisible='1'/>
+              <field name="trade_discount" invisible='1'/>
+              <field name="quantity_discount_id" widget="many2many_tags" options="{'no_create': True}" invisible='1'/>
+              <field name="quantity_amount" invisible='1'/>
+              <field name="quantity_discount" invisible='1'/>
+              <field name="special_discount_id" widget="many2many_tags" options="{'no_create': True}" invisible='1'/>
+              <field name="special_amount" invisible='1'/>
+              <field name="special_discount" invisible='1'/>
+              <field name="gross_total" invisible='1'/>
+              <field name="gross_subtotal" invisible='1'/>
+              <field name="special_discount" invisible='1'/>
+              <field name="mtrs" invisible='1'/>
+              <field name="alt_uom" invisible='1'/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']" position="after">
+              <field name="gross_total" sum="Total"/>
+              <field name="gross_subtotal" sum="Total" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="replace">
+                <field name="product_id" domain="[('sale_ok','=',True)]" string="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Product&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"/>        
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="before">
+              <field name="total_prod_weight" sum="Total Weight" invisible="1"/>       
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+              <page string="Invoice Discounts" name="discount">
+                <field name="invoice_dis_line_ids">
+                  <tree string="Discount Lines" editable="bottom">
+                    <field name="category" readonly="1"/>
+                    <field name="amount" sum="Total amount"/>
+                    <field name="trade_discount_id" invisible="1"/>
+                    <field name="trade_discounts"/>
+                    <field name="trade_amount" sum="Total Trade Discount amount"/>
+                    <field name="quantity_discount_id" invisible="1"/>
+                    <field name="quantity_discount"/>
+                    <field name="quantity_amount" sum="Total Quantity Discount amount"/>
+                    <field name="special_discount_id" invisible="1"/>
+                    <field name="special_discount"/>
+                    <field name="special_amount" sum="Total Special Discount amount"/>
+                  </tree>
+                </field>
+              </page>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']" position="after">
+                <field name="trade_discount_line_ids" invisible="1">
+                    <tree editable="bottom" string="Discounts" create="0">
+                        <field name="name"/>
+                        <!--Need invisible fields for on_change to create all necessary info -->
+                        <field name="discount_id" invisible="1"/>
+                        <field name="account_analytic_id" invisible="1"/>
+                        <field name="sequence" invisible="1"/>
+                        <field name="manual" invisible="1"/>
+                        <field name="account_id" groups="account.group_account_user"/>
+                        <field name="amount" invisible="1"/>
+                        <field name="amount_rounding" invisible="1"/>
+                        <field name="amount_total"/>
+                        <field name="currency_id" invisible="1"/>
+                    </tree>
+                </field>
+                <field name="quantity_discount_line_ids" invisible="1">
+                    <tree editable="bottom" string="Discounts" create="0">
+                        <field name="name"/>
+                        <!--Need invisible fields for on_change to create all necessary info -->
+                        <field name="discount_id" invisible="1"/>
+                        <field name="account_analytic_id" invisible="1"/>
+                        <field name="sequence" invisible="1"/>
+                        <field name="manual" invisible="1"/>
+                        <field name="account_id" groups="account.group_account_user"/>
+                        <field name="amount" invisible="1"/>
+                        <field name="amount_rounding" invisible="1"/>
+                        <field name="amount_total"/>
+                        <field name="currency_id" invisible="1"/>
+                    </tree>
+                </field>
+                <field name="special_discount_line_ids" invisible="1">
+                    <tree editable="bottom" string="Discounts" create="0">
+                        <field name="name"/>
+                        <!--Need invisible fields for on_change to create all necessary info -->
+                        <field name="discount_id" invisible="1"/>
+                        <field name="account_analytic_id" invisible="1"/>
+                        <field name="sequence" invisible="1"/>
+                        <field name="manual" invisible="1"/>
+                        <field name="account_id" groups="account.group_account_user"/>
+                        <field name="amount" invisible="1"/>
+                        <field name="amount_rounding" invisible="1"/>
+                        <field name="amount_total"/>
+                        <field name="currency_id" invisible="1"/>
+                    </tree>
+                </field>
+            </xpath>
+
+            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="after">
+                <field name="mtrs"/>    
+                <field name="alt_uom"/>         
+            </xpath>
+          <!--   <field name="currency_id" position="after">
+                <field name="z_fiscal_bool" invisible="1"/>
+            </field> -->
+            
+        </field>
+    </record>
+
+</odoo>

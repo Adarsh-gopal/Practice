@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Sequences for sale.order -->
+        <record id="seq_weighment_picking_order" model="ir.sequence">
+            <field name="name">Weighment Picking</field>
+            <field name="code">weighment.picking</field>
+            <field name="prefix">Weigh/</field>
+            <field name="padding">4</field>
+        </record>
+
+
+    </data>
+</odoo>

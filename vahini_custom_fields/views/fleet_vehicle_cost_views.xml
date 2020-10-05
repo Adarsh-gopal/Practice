@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="fleet_vehicle_log_fuel_view_form_inherit_vahini" model="ir.ui.view">
+           <field name="model">fleet.vehicle.log.fuel</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_form"/>
+            <field name="arch" type="xml">
+            	<field name="inv_ref" position="before">
+            		<field name="indent_ref"/>
+            	</field>
+            </field>
+        </record>
+
+        <record id="fleet_vehicle_log_fuel_view_form_inherit_vahini_tree_view" model="ir.ui.view">
+            <field name="name">fleet.vehicle.log.fuel.tree</field>
+            <field name="model">fleet.vehicle.log.fuel</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="liter" position="after">
+                    <field name="indent_ref"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="fleet_vehicle_view_form_inherit" model="ir.ui.view">
+            <field name="name">fleet.vehicle</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+                <field name="vin_sn" position="after">
+                    <field name="z_engine_no"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="fleet_vehicle_log_contract_view_form_inherit" model="ir.ui.view">
+            <field name="name">fleet.vehicle.log_contract.form</field>
+            <field name="model">fleet.vehicle.log.contract</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group[1]/group[2]" position="inside">
+                    <field name="z_policy_no"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+      <record id="view_order_form_order_type" model="ir.ui.view">
+        <field name="name">view_order_form_order_type</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+          <field name="payment_term_id" position="after">
+            <field name="order_type"/>
+          </field>
+        </field>
+      </record>
+
+      <record id="sale_order_type_tree_view" model="ir.ui.view">
+        <field name="name">sale_order_type_tree_view</field>
+        <field name="model">sale.order.type</field>
+        <field name="arch" type="xml">
+          <tree editable="bottom">
+            <field name="name" required="1"/>
+            <field name="description"/>
+          </tree>
+        </field>
+      </record>
+
+      <record id="sale_order_type_action" model="ir.actions.act_window">
+        <field name="name">Sale Order Type</field>
+        <field name="res_model">sale.order.type</field>
+        <field name="view_mode">tree</field>
+      </record>
+
+      <menuitem id="menu_sale_order_type"
+                name="Sale Order Type"
+                parent="sale.sale_menu_config_activity_type"
+                action="sale_order_type_action"/>
+    </data>
+</odoo>

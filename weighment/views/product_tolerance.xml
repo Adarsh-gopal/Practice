@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<record id="tolerance_inherit_view" model="ir.ui.view">
+		<field name="name">product.template_procurement</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='responsible_id']" position="after">
+				<field name="tolerance" string="Tolerance"/>
+			</xpath>
+		</field>
+	</record>
+</data>
+</odoo>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+    
+    <record id="vahini_page_format" model="report.paperformat">
+        <field name="name">vahini purchase order page format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">38</field>
+        <field name="margin_bottom">33</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">29</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report
+        id="custom_quotation_vahini"
+        model="sale.order"
+        string="Quotation"
+        report_type="qweb-pdf"
+        name="sale_order_quotation.sales_quotation_report"
+        file="sale_order_quotation.sales_quotation_report"
+        attachment="(object.state == 'draft') and ((object.name or 'INV').replace('/','_')+'.pdf')"
+        print_report_name="(object._get_report_base_filename())"
+        paperformat="sale_order_quotation.vahini_page_format"
+    />
+
+    <template id="sales_quotation_report">
+    <t t-call="web.html_container">
+    <t t-foreach="docs" t-as="o">
+    <t t-call="sale_order_quotation.external_layout_standard_vahini">
+    <table class="table" style="border:1px solid black;width:100%;padding-top:70px; margin-bottom:0;">
+        <thead>
+            <tr>
+                <td  colspan="10" style="width:100%;border:1px solid black;font-size:14px;" class="text-center">
+                    <strong>QUOTATION</strong>
+                </td>
+            </tr>
+            <tr>
+                <td  colspan="5" style="width:50%;border:1px solid black;font-size:14px;">
+                    <strong style="color:black;">Account No:</strong>
+                    <span style="color:black;font-style: normal;" t-esc="o.partner_reference"/><br/>
+                    <strong style="color:black;">Customer Name :</strong>
+                    <strong><span style="color:black;font-style: normal;" t-esc="o.partner_id.name"/></strong><br/>
+                    <span style="color:black;font-style: normal;" t-esc="o.partner_id.street"/><br/>
+                    <span style="color:black;font-style: normal;" t-esc="o.partner_id.street2"/><br/>
+                    <span style="color:black;font-style: normal;" t-esc="o.partner_id.city"/>
+                    <span style="color:black;font-style: normal;" t-esc="o.partner_id.state_id.name"/>
+                    <span style="color:black;font-style: normal;" t-esc="o.partner_id.country_id.name"/><br/>
+                    <strong style="color:black;">GSTIN :</strong>
+                    <span style="color:black;font-style: normal;" t-esc="o.partner_id.vat"/><br/>
+                    <strong style="color:black;">Mobile No. :</strong>
+                    <span style="color:black;font-style: normal;" t-esc="o.partner_id.mobile"/><br/>
+                    <strong style="color:black;">Email:</strong>
+                    <span style="color:black;font-style: normal;" t-esc="o.partner_id.email"/><br/>
+                </td>
+                <td colspan="7" style="width:50%;border:1px solid black;font-size:14px;">
+                    <strong>Quotation No:</strong>
+                    <!-- <t t-if="o.old_revision_ids">
+                        <t t-foreach="o.old_revision_ids" t-as="rev">
+                            <span t-field="rev.name"/>
+                        </t>
+                    </t>
+                    <t t-else=""> -->
+                        <span t-field="o.name"/>
+                    <!-- </t> --><br/>
+                    <strong>Quotation Date:</strong><span t-esc="o.date_order.strftime('%d-%m-%Y')"/><br/>
+                    <strong>Rev No:</strong>
+                    <t t-if="o.old_revision_ids">
+                        <span t-field="o.name"/>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="o.old_revision_ids" t-as="rev">
+                            <span t-field="rev.name"/>
+                        </t>
+                    </t><br/>
+                    <strong>Salesperson:</strong><span t-field="o.user_id"/><br/>
+                    <strong>Currency :</strong><span t-field="o.currency_id"/><br/>
+                    <strong>Payment Terms :</strong><span t-field="o.payment_term_id"/><br/>
+                    <strong>Delivered To: </strong><span t-field="o.z_delivered_to"/><br/>
+                    <strong>Revision Date:</strong><span t-esc="o.date_order.strftime('%d-%m-%Y')"/><br/>
+                </td>
+            </tr>
+            <tr style="color:black;font-size:14px;width:100%">
+                <th class="text-center" style="padding:1px;width:5%;border:1px solid black;">Sl.No</th>
+                <th class="text-center" style="padding:1px;width:10%;border:1px solid black;">Item Code</th>
+                <th colspan="2" class="text-center" style="padding:1px;width:25%;border:1px solid black;">Description</th>
+                <th class="text-center" style="padding:1px;width:10%;border:1px solid black;">HSN/SAC</th>
+                <th class="text-center" style="padding:1px;width:10%;border:1px solid black;">Alt.UOM Qty</th>
+                <th class="text-center" style="padding:1px;width:6%;border:1px solid black;">UOM</th>
+                <th class="text-center" style="padding:1px;width:7%;border:1px solid black;">Unit Price</th>
+                <th class="text-center" style="padding:1px;width:2%;border:1px solid black;">Taxes</th>
+                <th class="text-center" style="padding:1px;width:10%;border:1px solid black;">Amount</th>
+            </tr>
+        </thead>
+        <tbody style=";border:1px solid black;font-size:14px;">
+            <t t-set="i" t-value="1"/>
+            <t t-set="disc" t-value="0"/>
+            <t t-set="disc_tot" t-value="0"/>
+            <t t-set="amttotal" t-value="0"/>
+            <t t-set="current_subtotal" t-value="0"/>
+            <t t-foreach="o.order_line" t-as="line">
+            <tr>
+                <td class="text-center" style="border:1px solid black;padding:1px;width:5%;">
+                    <span t-esc="i"/>
+                    <t t-set="i" t-value="i+1"/>
+                </td>
+                <td class="text-left" style="border:1px solid black;padding:1px;width:10%;">
+                    <span t-esc="line.product_id.default_code"/>
+                </td>
+                <td colspan="2" class="text-left" style="border:1px solid black;padding:1px;width:25%;">
+                    <span t-esc="line.name"/>
+                </td>
+                <td class="text-left" style="border:1px solid black;padding:1px;width:10%;">
+                    <span t-esc="line.product_id.l10n_in_hsn_code"/>
+                </td>
+                <td class="text-center" style="border:1px solid black;padding:1px;width:5%;">
+                    <span t-esc="'{0}'.format(int(line.mtrs))"/>
+                </td>
+                <td class="text-center" style="border:1px solid black;padding:1px;width:6%;">
+                    <span t-esc="line.product_uom.name"/>
+                </td>               
+                <td class="text-center" style="border:1px solid black;padding:1px;width:7%;">
+                    <span t-esc="line.price_unit"/>
+                </td>              
+                <td class="text-center" style="border:1px solid black;padding:1px;width:2%;">
+                    <span t-esc="line.tax_id.name"/>
+                </td>
+                <td class="text-right" style="border:1px solid black;padding:1px;width:10%;">
+                    <span t-esc="line.price_subtotal"/>
+                </td>          
+            </tr>
+            </t>
+        </tbody>
+        <tbody style="width:100%;border:1px solid black;font-size:14px;">
+            <tr>
+                <td colspan="8" class="text-left" style="padding:1px;border:1px solid black;">
+                </td>
+                <td class="text-left" style="padding:1px;border:1px solid black;width:2%">
+                    <strong style="color:black">Subtotal</strong>
+                </td>
+                <td class="text-right" style="padding:1px;border:1px solid black;width:10px">
+                    <span t-esc="'{0:,.2f}'.format(int(o.amount_untaxed))"/>
+                </td>
+            </tr>
+            <tr style="font-size:14px;">
+                <td colspan="8" class="text-left" style="padding:1px;border:1px solid black;">
+                </td>
+                <td class="text-left" style="padding:1px;border:1px solid black;font-size:14px;width:2%">
+                  <strong style="color:black">Taxes</strong>
+                </td>
+                <td class="text-right" style="padding:1px;border:1px solid black;width:10%">
+                    <span t-esc="'{0:,.2f}'.format(int(o.amount_tax))"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8" class="text-left" style="padding:1px;border:1px solid black;">
+                </td>
+                
+               <td class="text-left" style="padding:1px;border:1px solid black;">
+                    <strong style="color:black">Total </strong>
+                </td>
+                <td class="text-right" style="padding:1px;border:1px solid black;">
+                    <span t-esc="'%.2f'%(o.rounded_total)"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="10" class="text-left" style="padding:1px;border:1px solid black;">
+                    <strong style="color:black">Amount In Words:</strong>
+                    <t t-set="amt_tot" t-value="'%.2f'%(o.rounded_total)"/>
+                    <t t-set="amountwords"  t-value="o.amt_in_words(amt_tot)"/>
+                    <span style="text-transform:uppercase" t-esc="amountwords"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="10" style="padding:1px;border:1px solid black;color:black">
+                    <strong>Terms and Conditions:</strong><br/>
+                        <p style="margin-bottom:0"><span t-esc="o.note"/></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>                   
+    </t>
+    </t>
+    </t>
+    </template>
+</data>
+</odoo>

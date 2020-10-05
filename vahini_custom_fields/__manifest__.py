@@ -1,0 +1,22 @@
+{
+    'name': 'Vahini Custom Fields',
+    'version': '13.1',
+    'author': "Prixgen Tech Solutions Pvt. Ltd.",
+    'website': 'https://www.prixgen.com',
+    'company': 'Prixgen Tech Solutions Pvt. Ltd.',
+    'category': 'Tools',
+    'summary': "Module for customized fields.",
+    'depends': ['base','sale','purchase','hr','fleet','crm','sale_crm'],
+    'data': [
+             'views/export_views.xml',
+             'views/crm_lead.xml',
+             'views/emp_details.xml',
+             'views/fleet_vehicle_cost_views.xml',
+             'views/product_template_view.xml',
+             'views/purchase_order_view.xml',
+             'views/resource_calendar_views.xml',
+             'views/stock_inventory_views.xml',
+             ],
+    'auto_install': False,
+    'application': True,
+}

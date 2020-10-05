@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="crm_case_form_view_leads_inherit" model="ir.ui.view">
+           <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+               <field name="website" position="before">
+               	<field name="gst"/>
+               	<field name="project_place"/>
+               </field>
+            </field>
+        </record>
+        <record id="crm_case_form_view_leads2_inherit" model="ir.ui.view">
+           <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+               <field name="phone" position="after">
+               	<field name="gst"/>
+               	<field name="project_place"/>
+               </field>
+            </field>
+        </record>
+        <record id="sale_order_inheritss" model="ir.ui.view">
+           <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+               	  <field name="enquiry_date"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>        
+            

@@ -1,0 +1,26 @@
+{
+    'name': 'Weighment Module',
+    'version': '11.0',
+    'author': "Prixgen Tech Solutions Pvt. Ltd.",
+    'website': 'https://www.prixgen.com',
+    'company': 'Prixgen Tech Solutions Pvt. Ltd.',
+    'category': 'Weighment',
+    'summary': 'Weighment',
+    'description': """ """,
+    'depends': ['stock','product','purchase','maintenance','mrp','fleet','sale_management','gateentry','operator_login','sale'],
+    'data': [
+        'views/weighment_main_form.xml',
+        'views/weighment_type_form.xml',
+        
+        'data/ir_sequence_data.xml',
+        'views/equipments.xml',
+        'views/mrp_production.xml',
+        'views/stock_picking_type.xml',
+        'views/product_tolerance.xml',
+        'views/purchase_order.xml',
+        'views/sale_order.xml',
+        'views/stock_picking.xml',
+    ],
+    'installable': True,
+    'auto_install': False,
+}

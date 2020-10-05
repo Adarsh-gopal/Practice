@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="product_category_form_view_internal_ref" model="ir.ui.view">
+            <field name="name">product_category_form_view_internal_ref</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <field name="parent_id" position="after">
+                    <field name="internal_reference_sequence_id" class="oe_inline"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

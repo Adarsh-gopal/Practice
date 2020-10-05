@@ -1,0 +1,297 @@
+<odoo>
+  <data>
+
+    <!-- Inspection Plan -->
+    <record id="inspection_plan_tree_view" model="ir.ui.view">
+      <field name="name">inspection plan tree view</field>
+      <field name="model">inspection.plan</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="picking_type_id" string="Operation Type"/>
+          <field name="product_tmpl_id" string="Product"/>
+          <field name="product_id" groups="product.group_product_variant" string="Product Varient"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="inspection_plan_form_view" model="ir.ui.view">
+      <field name="name">inspection plan form view</field>
+      <field name="model">inspection.plan</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <h1><field name="name" string="" readonly="1"/></h1>
+              </group>
+            </group>
+            <group>
+              <group>
+                <field name="team_id" required="1"/>
+                <field name="picking_type_id" required="1" string="Operation Type"/>
+                <field name="product_tmpl_id" required="1" string="Product"/>
+                <field name="product_id" groups="product.group_product_variant" string="Product Varient"/>
+              </group>
+              <group>
+                <field name="start_date"/>
+                <field name="end_date"/>
+              </group>
+            </group>
+            <field name="quality_point_ids">
+              <tree>
+                <field name="title"/>
+                <field name="measure_frequency_type"/>
+                <field name="test_type_id"/>
+                <field name="test_method_id"/>
+                <field name="norm"/>
+                <field name="norm_unit"/>
+                <field name="tolerance_min"/>
+                <field name="tolerance_max"/>
+                <field name="team_id" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+              </tree>
+            </field>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="inspection_plan_action" model="ir.actions.act_window">
+      <field name="name">Inspection Plan</field>
+      <field name="res_model">inspection.plan</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+      id="menu_operations"
+      name="Operations"
+      parent="quality_control.menu_quality_control"
+      sequence="20"/>
+    <menuitem
+      id="menu_inspection_plan"
+      name="Inspection Plan"
+      parent="menu_operations"
+      action="inspection_plan_action"
+      sequence="1"/>
+
+    
+
+    <!-- Inspection Sheet -->
+     <record id="inspection_sheet_tree_view" model="ir.ui.view">
+      <field name="name">inspection sheet tree view</field>
+      <field name="model">inspection.sheet</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="product_id" string="Product"/>
+          <field name="picking_id"/>
+          <field name="lot_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="inspection_sheet_form_view" model="ir.ui.view">
+      <field name="name">inspection sheet form view</field>
+      <field name="model">inspection.sheet</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="process_quantities" type="object" string="Release Inventory" attrs="{'invisible':[('state','=','open')]}"/>
+            <button name="state_approve" type="object" class="oe_highlight" string="Approve" attrs="{'invisible':[('state','!=','open')]}"/>
+            <button name="state_reject" type="object" class="oe_highlight" string="Reject" attrs="{'invisible':[('state','!=','open')]}"/>
+            <field name="state" widget="statusbar"/>
+          </header>
+          <sheet>
+            <group>
+              <group>
+                <field name="name" string="Code" readonly="1"/>
+                <field name="date" readonly="1"/>
+                <field name="company_id" readonly="1"/>
+                <field name="team_id" readonly="1"/>
+                <field name="source"/>
+                <field name="picking_id" readonly="1"/>
+                <field name="product_id" readonly="1" string="Product"/>
+                <field name="lot_id" readonly="1"/>
+              </group>
+              <group>
+                <field name="status"/>
+                <field name="quantity_recieved"/>
+                <field name="quantity_accepted"/>
+                <field name="quantity_rejected"/>
+                <field name="quantity_destructive"/>
+                <field name="under_deviation"/>
+              </group>
+            </group>
+            <field name="quality_check_ids">
+              <form>
+              </form>
+              <tree editable="bottom" delete="0" create="0">
+                <field name="test_type" invisible="1"/>
+                <field name="quality_state" invisible="1"/>
+                <field name="test_type_id" readonly="1"/>
+                <field name="test_method_id" readonly="1"/>
+                <field name="quality_state" attrs="{'readonly':[('test_type','=','measure')]}"/>
+                <field name="measure" attrs="{'invisible':[('test_type','!=','measure')]}"/>
+                <field name="norm" readonly="1" attrs="{'invisible':[('test_type','!=','measure')]}"/>
+                <field name="norm_unit" readonly="1" attrs="{'invisible':[('test_type','!=','measure')]}"/>
+                <field name="tolerance_min" readonly="1" attrs="{'invisible':[('test_type','!=','measure')]}"/>
+                <field name="tolerance_max" readonly="1" attrs="{'invisible':[('test_type','!=','measure')]}"/>
+              </tree>
+            </field>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+
+    <record id="inspection_sheet_action" model="ir.actions.act_window">
+      <field name="name">Inspection Sheet</field>
+      <field name="res_model">inspection.sheet</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_ids" eval="[(5, 0, 0),
+          (0, 0, {'view_mode': 'tree', 'view_id': ref('inspection_sheet_tree_view')}),
+          (0, 0, {'view_mode': 'form', 'view_id': ref('inspection_sheet_form_view')})]"/>
+    </record>
+
+
+    <menuitem
+      id="menu_inspection_sheet"
+      name="Inspection Sheet"
+      parent="menu_operations"
+      action="inspection_sheet_action"
+      sequence="2"/>
+
+    <record id="prix_quality_base_alert_team_view_form" model="ir.ui.view">
+        <field name="name">prix quality base alert team view form</field>
+        <field name="model">quality.alert.team</field>
+        <field name="inherit_id" ref="quality_control.quality_alert_team_view_form"/>
+        <field name="arch" type="xml">
+            <field name="alias_contact" position="after">
+                <field name="approver_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_picking_type_form_inspection_sequences" model="ir.ui.view">
+      <field name="name">view picking type form inspection sequences</field>
+      <field name="model">stock.picking.type</field>
+      <field name="inherit_id" ref="stock.view_picking_type_form"/>
+      <field name="arch" type="xml">
+        <field name="sequence_code" position="after">
+          <field name="sequence_for_inspection_plan"/>
+          <field name="sequence_for_inspection_sheet"/>
+        </field>
+      </field>
+    </record>
+
+    <record id="view_location_form_desctructive_location" model="ir.ui.view">
+      <field name="name">view location form desctructive location</field>
+      <field name="model">stock.location</field>
+      <field name="inherit_id" ref="stock.view_location_form"/>
+      <field name="arch" type="xml">
+        <field name="return_location" position="after">
+          <field name="desctructive_location"/>
+        </field>
+      </field>
+    </record>
+
+
+    <!-- Characteristics -->
+    <record id="quality_characteristic_tree_view" model="ir.ui.view">
+      <field name="name">quality characteristic tree view</field>
+      <field name="model">quality.characteristic</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" string="Code"/>
+          <field name="description"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="quality_characteristic_form_view" model="ir.ui.view">
+      <field name="name">quality characteristic form view</field>
+      <field name="model">quality.characteristic</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="name" string="Code"/>
+                <field name="description"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="quality_characteristic_action" model="ir.actions.act_window">
+      <field name="name">Characteristics</field>
+      <field name="res_model">quality.characteristic</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+      id="menu_quality_characteristic"
+      name="Characteristics"
+      parent="quality_control.menu_quality_configuration"
+      action="quality_characteristic_action"
+      sequence="30"/>
+
+
+    <record id="quality_point_view_form_characteristic" model="ir.ui.view">
+      <field name="name">quality point view form characteristic</field>
+      <field name="model">quality.point</field>
+      <field name="inherit_id" ref="quality.quality_point_view_form"/>
+      <field name="arch" type="xml">
+        <field name="picking_type_id" position="after">
+          <field name="characteristic"/>
+        </field>
+      </field>
+    </record>
+
+    
+    <!-- Alert Kanban -->
+    <record id="quality_alert_action_team_inspection_sheet" model="ir.actions.act_window">
+      <field name="name">Inspection Sheet</field>
+      <field name="res_model">inspection.sheet</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('state', '=', 'open'),('team_id', '=', active_id)]</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Nothing To Inspect
+        </p>
+      </field>
+    </record>
+
+    <record id="quality_alert_team_dashboard_view_kanban_inspection_sheet" model="ir.ui.view">
+      <field name="name">quality alert team dashboard view kanban inspection sheet</field>
+      <field name="model">quality.alert.team</field>
+      <field name="inherit_id" ref="quality_control.quality_alert_team_dashboard_view_kanban"/>
+      <field name="arch" type="xml">
+        <xpath expr="//templates//div[@class='container o_kanban_card_content']/div" position="inside">
+          <div class="col-6 o_kanban_primary_left">
+          </div>
+          <div class="col-6 o_kanban_primary_left">
+            <p>
+            </p>
+          </div>
+          <div class="col-6 o_kanban_primary_left">
+            <button class="btn btn-primary" name="%(quality_alert_action_team_inspection_sheet)d" type="action">
+              <span><field name="inspection_sheet_count"/> Inspection Sheets</span>
+            </button>
+          </div>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

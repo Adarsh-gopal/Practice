@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mrp_production_form_views" model="ir.ui.view">
+            <field name="name">mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+	            <field name="routing_id" position="after">
+                    <field name="workcenter_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                    <field name="operator_name" options="{'no_create': True, 'no_create_edit':True}"/>
+                    <field name="cutter_id" options="{'no_create': True, 'no_create_edit':True}" widget="many2many_tags"/>
+                    <field name="z_operator_assign" invisible="1"/>
+                </field>
+                <field name="origin" position="after">
+                        <field name="shift" options="{'no_create': True, 'no_create_edit':True}"/>
+                        <field name="logger_name"/>
+                        <field name="button_enable_change_wc" invisible="1"/>
+                </field>
+	          <xpath expr="//notebook" position="inside">
+                <page string="Operator Log">
+                    <field name="log_ids">
+                        <tree string="Operator Log" editable="bottom">
+                            <field name="name"/>
+                            <field name="logger_name"/>
+                            <field name="workcenter_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="shift" options="{'no_create': True, 'no_create_edit':True}"/>
+                            <field name="login_time"/>
+                            <field name="cutter_id" widget="many2many_tags"/>
+                        </tree>
+                    </field>
+                </page>
+              </xpath>
+              
+            </field>
+        </record>
+
+<record model="ir.ui.view" id="workcenter_line_kanban_inherited">
+        <field name="name">mrp.production.work.order.kanban</field>
+        <field name="model">mrp.workorder</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column" create="0">
+                <field name="name"/>
+                <field name="production_id"/>
+                <field name="state"/>
+                <field name="workcenter_id"/>
+                <field name="product_id"/>
+                <field name="qty_production"/>
+                <field name="product_uom_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <strong><span><t t-esc="record.production_id.value"/></span> - <span><t t-esc="record.name.value"/></span></strong>
+                                <div class="row">
+                                    <div class="col-xs-7 o_kanban_primary_left">
+                                        <span><t t-esc="record.product_id.value"/></span>
+                                    </div>
+                                    <div class="col-xs-5 o_kanban_primary_right">
+                                        <span><t t-esc="record.qty_production.value"/> <t t-esc="record.product_uom_id.value"/></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-xs-7 o_kanban_primary_left">
+                                        <span><t t-esc="record.state.value"/></span>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+        <record model="ir.actions.act_window" id="action_mrp_workorder_production_specific_inherit">
+            <field name="name">Work Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.workorder</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form,gantt,calendar,pivot,graph</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('workcenter_line_kanban_inherited')})]"/>
+            <field name="domain">[('production_id', '=', default_mo_id)]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Work Orders are operations to be processed at a Work Center to realize a
+                Manufacturing Order. Work Orders are trigerred by Manufacturing Orders,
+                they are based on the Routing defined on these ones
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

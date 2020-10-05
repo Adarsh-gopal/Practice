@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="man_power.man_power_template">
+        <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="doc">
+        <t t-call="web.external_layout">
+            <div class="page">
+            <div class="oe_structure"/>
+                <t t-set="info" t-value="get_header_info"/>
+                    <h3 class="text-center mb32" style="margin-top:50px;">
+                          <br></br>
+                        <br></br><br></br><br></br>
+                    Shift Details from 
+                    
+                        
+                        <u>
+                            <t t-esc="doc.from_date"/>
+                        </u> to 
+                    
+                        
+                        <u>
+                            <t t-esc="doc.to_date"/>
+                        </u> 
+                
+                    
+                    
+                    </h3>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>EMPLOYEE TYPE</th>
+                                <th>CATEGORY TYPE</th>
+                                <th>FROM DATE</th>
+                                <th>TO DATE</th>
+                                <th>NAME</th>
+                                <th>WEEKDAYS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.one_line" t-as="l">
+                                <tr>
+                                    <td>
+                                        <span t-field="l.employee_type"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.category_types"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.from_date"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.to_date"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.days"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <!--<table class="table table-bordered mb32" style="table-layout:auto">
+                    <thead>
+                    <tr>
+                        <th>Month</th>
+                            <t t-foreach="doc.get_months()" t-as="month">
+                                &lt;th class="text-center" style="background-color:<t t-esc="month['color']"/>!important;" colspan=<t t-esc="month['days']"/>&gt;<t t-esc="month['month_name']"/>&lt;/th&gt;
+                            </t>
+                        <th/>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">
+                            <strong>Man Power</strong>
+                        </td>
+                        <t t-foreach="doc.get_day()" t-as="day"> 
+                            &lt;td class="text-center oe_leftfit oe_rightfit" style="background-color:<t t-esc="day['color']"/>!important; font-size:8px;width:50px"&gt;<t t-esc="day['day_str']"/>&lt;/td&gt; 
+                            <t t-set = "total_days" t-value = "total_days + 1" /
+                        </t>
+                        <td/>
+                    </tr>
+                    <tr>
+                        <t t-foreach="doc.get_day()" t-as="day">
+                            &lt;td class="text-center oe_leftfit oe_rightfit" style="background-color:<t t-esc="day['color']"/>!important; font-size: 10px;width:50px"&gt;<t t-esc="day['day']"/>&lt;/td&gt;
+                        </t>
+                        <td/>
+                    </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr t-foreach="doc.get_employee()" t-as="employee">
+                            <tr style="text-align:left" width="20%">
+                                <strong><td t-esc="employee['name']"/></strong>
+                            </tr>
+                            
+                            
+                        </tr>
+                        <th>Name</th>
+                        <t t-foreach="doc.get_details()" t-as="employee">
+                            &lt;th class="text-center oe_leftfit oe_rightfit" style="background-color:<t t-esc="employee['color']"/>!important; font-size: 10px;width:60px"&gt;<t t-esc="employee['name']"/>&lt;br&gt;&lt;/th&gt;
+
+                        </t>
+                        <tr>
+                            <th>Weekoff</th>
+                        <t t-foreach="doc.get_details()" t-as="employee">
+                        &lt;td class="text-center oe_leftfit oe_rightfit" style="background-color:<t t-esc="employee['color']"/>!important; font-size: 10px;width:50px"&gt;<t t-esc="employee['days']"/>&lt;/td&gt;
+                        </t>
+                    </tr>
+                    <tr>
+                        <th>Date</th> 
+                        <t t-foreach="doc.get_details()" t-as="employee">
+                               
+                        
+                        
+                        
+                                &lt;td class="text-center oe_leftfit oe_rightfit" style="background-color:<t t-esc="employee['color']"/>!important; font-size: 10px;width:50px"&gt;<t t-esc="employee['from_date']"/>&lt;/td&gt;
+
+                                
+                        </t>
+                    </tr>
+                        <t t-foreach="doc.get_leave()" t-as="day">
+                                &lt;td class="text-center oe_leftfit oe_rightfit" style="background-color:<t t-esc="day['color']"/>!important; font-size: 10px"&gt;<t t-esc="day['days']"/>&lt;/td&gt;
+                                
+                        </t>
+                    </tbody>
+                </table>-->
+                    <!--t t-foreach="doc.get_day" t-as="day">
+                        &lt;td class="text-center oe_leftfit oe_rightfit" style="background-color:<t t-esc="day['color']"/>!important; font-size: 8px; min-width: 18px"&gt; <t t-esc="day['day_str']"/>&lt;/td&gt;
+                    </t-->
+        </div>
+    </t>    
+    </t>
+    </t>
+	</template>
+	<template id="man_power.man_power">
+        <t t-call="web.html_container">
+            <t t-call="man_power.man_power_template"/>
+        </t>
+    </template>
+	
+</odoo>

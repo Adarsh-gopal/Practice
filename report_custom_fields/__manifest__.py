@@ -1,0 +1,25 @@
+{
+    'name': 'Fields for Report',
+    'version': '13.1',
+    'author': "Prixgen Tech Solutions Pvt. Ltd.",
+    'website': 'https://www.prixgen.com',
+    'company': 'Prixgen Tech Solutions Pvt. Ltd.',
+    'category': 'Tools',
+    'summary': "Module for customized fields.",
+    'depends': ['base','hr','sale_management','purchase','mrp','crm','fleet','vahini_custom_fields',],
+    'data': [
+              'data/ir_sequence_data.xml',
+              'views/account_invoice.xml',
+              'views/crm_lead.xml',
+              'views/custom_fields.xml',
+              'views/hr_employee.xml',
+              'views/mrp_production.xml',
+              'views/purchase_order.xml',
+              'views/res_company.xml',
+              'views/res_partner.xml',
+              'views/sale_order.xml',
+            
+             ],
+    'auto_install': False,
+    'application': True,
+}

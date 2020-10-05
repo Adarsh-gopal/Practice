@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="weighment_type_form_view" model="ir.ui.view">
+			<field name="name">Weighment type form view</field>
+			<field name="model">weighment.picking.type</field>
+			<field name="arch" type="xml">
+                <form string="Weighment Type Form">
+                    <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+                </form>
+              </field>
+		</record>
+
+		<record model="ir.ui.view" id="weighment_type_tree_view">
+            <field name="name">Weighment Type Tree view</field>
+            <field name="model">weighment.picking.type</field>
+            <field name="arch" type="xml">
+                <tree string="Weighment Type Tree">
+                	<field name="name"/>
+                	<field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="weighment_configuration_action">
+            <field name="name">Weighment Types</field>
+            <field name="res_model">weighment.picking.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="weighment_picking_type_action" model="ir.actions.act_window">
+            <field name="name">Weighment</field>
+            <field name="res_model">weighment.picking.type</field>
+            <field name="type">ir.actions.act_window</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">kanban,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a new Weighment type.
+              </p><p>
+                The Weighment type system allows you to assign each weighment
+                Weighment a specific type which will alter its views accordingly.
+                On the Weighment type you could e.g. specify if packing is needed by default,
+                if it should show the customer.
+              </p>
+            </field>
+        </record>
+
+        <record id="weighment_picking_type_kanban" model="ir.ui.view">
+            <field name="name">stock.picking.type.kanban</field>
+            <field name="model">weighment.picking.type</field>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey o_kanban_dashboard o_emphasize_colors o_stock_kanban" create="0">
+                	<field name="count_picking_ready"/>
+     
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div name="stock_picking">
+                                <div>
+                                    <div t-attf-class="o_kanban_card_header">
+                                        <div class="o_kanban_card_header_title">
+                                            <div class="o_primary">
+                                                <a type="object" name="get_weighment_picking_action_picking_type">
+                                                    <field name="name"/>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="container o_kanban_card_content">
+                                        <div class="row">
+                                            <div class="col-xs-6 o_kanban_primary_left">
+                                                <button class="btn btn-primary" name="get_action_weighment_picking_tree_ready" type="object">
+                                                    <span><t t-esc="record.count_picking_ready.value"/> To Weigh</span>
+                                                    
+                                                </button>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </t>
+
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        <menuitem action="weighment_picking_type_action" id="weighment_picking_type_menu" parent="menu_root" sequence="0"
+            name="Dashboard"/>
+
+    
+        
+        <menuitem name="Configuration" id="menu_weighment_configuration" parent="menu_root"/>
+        <menuitem name="Weighment Type" id="menu_weighment_configuration_action" parent="menu_weighment_configuration" action="weighment_configuration_action"/>
+	</data>
+</odoo>

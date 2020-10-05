@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="weighment_main_form_view" model="ir.ui.view">
+			<field name="name">Weighment form view</field>
+			<field name="model">weighment.picking</field>
+			<field name="arch" type="xml">
+                <form string="Weighment Picking Form">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button name="calculate_tolerance_limit" type="object" string="Calculate Tolerance Limit" attrs="{'invisible': [('state', '!=', 'open')]}" class="oe_highlight" />
+                        <button name="button_close" type="object" string="Close" class="oe_highlight" attrs="{'invisible': [('state', 'in', ('release','close'))]}"/>
+                        <button name="button_cancel" type="object" string="Cancel" class="oe_highlight" />
+                    </header>
+                    <sheet>
+                        <h1><field name="name" /></h1>
+                        <group>
+                            <group>
+                                <field name="weighment_type"/>
+                                <field name="mo_id" attrs="{'invisible': [('weighment_type', '!=', 1)],'readonly':[('state','=','close')]}" options="{'no_create': True, 'no_create_edit':True}"/>
+                                <field name="sale_id" invisible = "1"/>
+                                <field name="purchase_id" attrs="{'invisible': [('weighment_type', '!=', 2)],'readonly':[('state','=','close')]}" options="{'no_create': True, 'no_create_edit':True}"/>
+                                <field name="shipment_no" context="{'order_display': 'name desc' }" attrs="{'invisible': [('weighment_type', '=', 2)]}"/>
+                                <field name="gate_in_id" attrs="{'invisible': [('weighment_type', '!=', 2)],'required':[('weighment_type','=',2)],'readonly':[('state','=','close')]}" options="{'no_create': True, 'no_create_edit':True}"/>
+                                <field name="gate_out_id" attrs="{'invisible': [('weighment_type', '!=', 3)],'readonly':[('state','=','close')]}" options="{'no_create': True, 'no_create_edit':True}"/>
+                                <field name="workcenter_id" attrs="{'invisible': [('weighment_type', '!=', 1)]}"/>
+                            </group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="date"/>
+                                <field name="reason" attrs="{'invisible': [('state', '!=', 'close')],'required': [('state', '=', 'close')]}"/>
+                                <field name="reference"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="weighment_product_lines">
+                                    <tree string="Weighment Product Lines" editable="bottom">
+                                        <field name="product_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="description"/>
+                                        <field name="product_uom"/>
+                                        <field name="po_qty" attrs="{'column_invisible': [('parent.weighment_type', '!=', 2)]}"/>
+                                        <field name="so_qty" attrs="{'column_invisible': [('parent.weighment_type', '!=', 3)]}"/>
+                                        <field name="mo_qty" attrs="{'column_invisible': [('parent.weighment_type', '!=', 1)]}"/>
+                                        <field name="product_quantity" />
+                                    
+                                        <field name="purchase_id" attrs="{'column_invisible': [('parent.weighment_type', '!=', 2)]}"/>
+                                        <field name="sale_id" attrs="{'column_invisible': [('parent.weighment_type', '!=', 3)]}"/>
+                                        <field name="mo_id" attrs="{'column_invisible': [('parent.weighment_type', '!=', 1)]}"/>
+                                        <field name="product_batch"/>
+                                        <field name="std_weight"/>
+                                        <field name="gross_weight"/>
+                                        <field name="tolerance" invisible="1"/>
+                                        <field name="weighment_type" invisible="1"/>
+                                        <field name="deliver_line_id" invisible="1"/>
+                                        <field name="shipment_no" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Internal Transport">
+                                <field name="weighment_truck_lines">
+                                    <tree string="Weighment Product Lines" editable="bottom">
+                                        <field name="truck_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="empty_truck_weight"/>
+                                        <field name="loaded_truck_weight"/>
+                                        <field name="total_truck_weight" invisible="1"/>
+                                        <field name="weighment_type" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Trolley Details" attrs="{'invisible': [('weighment_type', '!=', 1)]}">
+                                <field name="weighment_trolly_lines">
+                                    <tree string="Weighment Trolly Lines" editable="bottom">
+                                        <field name="trolly_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="empty_trolly_weight"/>
+                                        <field name="loaded_trolly_weight"/>
+                                        <field name="total_trolly_weight" invisible="1"/>
+                                        <field name="weighment_type" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                             <page string="External Transport" attrs="{'invisible': [('weighment_type', '=', 1),('weighment_type', '=', 3)]}">
+                                <field name="weighment_vehicle_lines">
+                                    <tree string="Weighment Vehicles Lines" editable="bottom">
+                                        <field name="vehicle_id" options="{'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="empty_vehicle_weight"/>
+                                        <field name="loaded_vehicle_weight"/>
+                                        <field name="total_vehicle_weight" invisible="1"/>
+                                        <field name="weighment_type" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Calculation">
+                                <group>
+                                    <group>
+                                        <field name="total_products"/>
+                                        <field name="total_truck_weight"/>
+                                        <field name="empty_truck_weight"/> 
+                                    </group>
+                                    <group>
+                                        <field name="tolerance"/>
+                                        <field name="gross_weight"/>
+                                        <field name="net_weight"/>
+                                        <field name="difference"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+              </field>
+		</record>
+
+		<record model="ir.ui.view" id="weighment_main_tree_view">
+            <field name="name">Weighment Tree view</field>
+            <field name="model">weighment.picking</field>
+            <field name="arch" type="xml">
+                <tree string="Weighment Picking Tree">
+                	<field name="name"/>
+                    <field name="weighment_type"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="weighment_main_action">
+            <field name="name">Weighment Operations</field>
+            <field name="res_model">weighment.picking</field>
+
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record  model="ir.actions.act_window" id="weighment_main_action_active">
+            <field name="name">Weighment Operations</field>
+            <field name="res_model">weighment.picking</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('weighment_main_tree_view')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('weighment_main_form_view')})]"/>
+            <field name="domain">[('shipment_no', '=', active_id)]</field>
+        </record>
+
+        <record id="view_weighment_picking_internal_search" model="ir.ui.view">
+            <field name="name">weighment.picking.internal.search</field>
+            <field name="model">weighment.picking</field>
+
+            <field name="arch" type="xml">
+                <search string="Weighment Types">
+                    <field name="weighment_type"/>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <menuitem name="Weighment" id="menu_root" web_icon="weighment,static/description/icon.png"/>
+        <menuitem name="Weighment" id="menu_weighment_picking" parent="menu_root"/>
+        <menuitem name="Weighment Picking" id="menu_weighment_picking_action" parent="menu_weighment_picking" action="weighment_main_action"/>
+
+
+
+         <record id="weighment_picking_action_picking_type" model="ir.actions.act_window">
+            <field name="name">All Transfers</field>
+            <field name="res_model">weighment.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="domain">[('state', '=', 'open')]</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_weighment_picking_internal_search"/>
+
+            <field name="context">{
+                    'search_default_weighment_type': [active_id],
+
+            }
+            </field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click here to create a new transfer.
+              </p><p>
+                You can either do it immediately or mark it as Todo for future processing. Use your scanner to validate the transferred quantity quicker.
+              </p>
+            </field>
+        </record>
+        <record id="action_weighment_picking_tree_ready" model="ir.actions.act_window">
+            <field name="name">To Weigh</field>
+            <field name="res_model">weighment.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'open')]</field>
+            <field name="context">{
+                    'search_default_weighment_type': [active_id],
+            }
+            </field>
+            <field name="search_view_id" ref="view_weighment_picking_internal_search"/>
+             <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click here to create a new transfer.
+              </p><p>
+                You can either do it immediately or mark it as Todo for future processing. Use your scanner to validate the transferred quantity quicker.
+              </p>
+            </field>
+       </record>
+
+
+	</data>
+</odoo>

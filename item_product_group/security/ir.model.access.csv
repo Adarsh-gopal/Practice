@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_group_primary_user,product.group.primary,model_product_group_primary,base.group_user,1,1,1,1
+access_product_group_secondary_user,product.group.secondary,model_product_group_secondary,base.group_user,1,1,1,1
+access_item_category_user,item.category,model_item_category,base.group_user,1,1,1,1

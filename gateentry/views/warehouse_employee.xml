@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="warehouse_employees_form" model="ir.ui.view" >
+            <field name="name">Warehouse User form view</field>
+            <field name="model">gateentry.warehouse.users</field>
+            <field name="arch" type="xml">
+                <form string="Warehouse Users">
+                    <sheet>
+                        <h3><group>
+                                <group>
+                                    <field name="name"/>
+                                </group>
+                                <group>
+                                </group>
+                            </group></h3>
+                                <notebook>
+                                <page name="warehouse_allot_ids" string="Warehouse">
+                                    <field name="warehouse_ids" widget="one2many_list">
+                                        <tree string="Warehouse" editable="bottom">
+                                            <field name="name" />
+                                            <field name="default_field" invisible="1"/>
+                                            <field name="current_user" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="warehouse_employees_tree">
+            <field name="name">Warehouse User tree view</field>
+            <field name="model">gateentry.warehouse.users</field>
+            <field name="arch" type="xml">
+                <tree string="Warehouse Users">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_type_warehouse_employees">
+            <field name="name">Warehouse Users</field>
+            <field name="res_model">gateentry.warehouse.users</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        
+        <menuitem name="Configuration" id="menu_conf" parent="menu_root"/>
+        <menuitem name="Warehouse Users" id="menu_warehouse_users" parent="menu_conf" action="action_type_warehouse_employees"/>
+	</data>
+</odoo>

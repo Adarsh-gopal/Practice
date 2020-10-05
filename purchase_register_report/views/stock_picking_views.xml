@@ -1,0 +1,30 @@
+<odoo>
+
+        <record id="view_inherited_stock_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="is_billed"  />
+                    
+                </xpath>
+
+            </field>
+        </record>
+
+
+         <!-- <record id="view_invoice_supplier_form_form" model="ir.ui.view">
+            <field name="name">account.invoice.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='commercial_partner_id']" position="after">
+                    <field name="stock_grn_ids" widget="many2many_tags" readonly='1'/>
+                    
+                </xpath>
+
+            </field>
+        </record> -->
+
+</odoo>

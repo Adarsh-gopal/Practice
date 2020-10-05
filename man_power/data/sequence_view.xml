@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record id="seq_man_power" model="ir.sequence">
+            <field name="name">Man Power</field>
+            <field name="code">man.power</field>
+            <field name="prefix">MP</field>
+            <field name="padding">5</field>
+        </record>
+    </data>
+</odoo>

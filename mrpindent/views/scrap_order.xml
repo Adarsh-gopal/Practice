@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="stock_scrap_form_view_inherit_vahini" model="ir.ui.view">
+           <field name="name">stock.scrap.form</field>
+           <field name="model">stock.scrap</field>
+            <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+            <field name="arch" type="xml">
+            	<field name="production_id" position="replace">
+            		<field name="production_id" invisible="0"/>
+            	</field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

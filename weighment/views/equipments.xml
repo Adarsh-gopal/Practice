@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<record model="ir.ui.view" id="view_maintenance_equipmemts_form_inheritance">
+            <field name="name">equipment.form</field>
+            <field name="model">maintenance.equipment</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+            <field name="arch" type="xml">
+                <field name="location" position="after">
+                	<field name="weight"/>
+
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_maintenance_fleet_form_inheritance">
+            <field name="name">fleet.vehicle.form</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+                <field name="color" position="after">
+                	<field name="weight"/>
+
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_purchase_order_completed_form">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_ref" position="after">
+                    <field name="order_completed" invisible="1"/>
+                    <field name="final_display" invisible="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_sale_order_completed_form">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="date_order" position="after">
+                    <field name="order_completed" invisible="1"/>
+                    <field name="final_display" invisible="1"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_manufacturing_order_completed_form">
+            <field name="name">mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <field name="bom_id" position="after">
+                    <field name="order_completed" invisible="1"/>
+                    <field name="final_display" invisible="1"/>
+                </field>
+            </field>
+        </record>
+</data>
+</odoo>

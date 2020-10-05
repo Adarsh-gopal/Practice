@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+    <template id="external_layout_standard_vahini" >
+        <div class="header">
+            <table class="table" style="border:1px solid black;width:100%;margin-bottom:0">
+                <tr>
+                    <td style="border:1px solid black;width:100%;">
+                    <div class="row">
+                        <div class="col-2" style="font-size:14px;">
+                            <div style="margin-bottom:10px;">
+                                <img class="text-right" t-if="doc.company_id.logo" t-att-src="image_data_uri(doc.company_id.logo)" style="width:100px;height:50px;"/>
+                            </div>
+                        </div>
+                        <div class="text-center col-10" style="line-height: initial;">
+                            <strong style="font-size:14px;text-transform:uppercase;padding-right:120px" t-field="doc.company_id.name"/><br/>
+                            <span style="color:black;font-size:12px;padding-right:120px" t-field="doc.company_id.partner_id.street"/><br/>
+                            <span style="color:black;font-size:12px;padding:1px;" t-field="doc.company_id.partner_id.street2"/>
+                            <span style="color:black;font-size:12px;padding:1px;" t-field="doc.company_id.city"/>
+                            <span style="color:black;">-</span>
+                            <span style="color:black;font-size:12px;padding:1px;" t-field="doc.company_id.partner_id.zip"/>
+                            <span style="color:black;font-size:12px;padding:1px;" t-field="doc.company_id.state_id"/>
+                            <span style="color:black;">,</span>
+                            <span style="color:black;font-size:12px;padding:1px;padding-right:120px" t-field="doc.company_id.country_id"/>
+                            <br/>
+                            <strong style="font-size:12px;padding:1px;"><t t-esc="'Phone'"/>:</strong>
+                                <span style="color:black;font-size:12px;" t-field="doc.company_id.phone"/>
+                            <t t-if='doc.company_id.email'>
+                                <strong style="font-size:12px;padding:1px;"><t t-esc="'Email'"/>:</strong>
+                                <t t-set="emailstr" t-value="doc.email_split(doc.company_id.email)"/> 
+                                <span style="color:black;font-size:12px;" t-esc="emailstr"/>
+                            </t>
+                            <strong style="font-size:12px;padding:1px;"><t t-esc="'GSTIN:'"/></strong>
+                                <span style="color:black;font-size:12px;" t-field="doc.company_id.vat"/>
+                            <strong style="font-size:12px;padding:1px;padding-right:120px"><t t-esc="'CIN:'"/></strong><br/>
+                            <span style="color:black;font-size:12px;padding-right:120px" t-field="doc.company_id.cin_no"/>
+                        </div>
+                    </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="article o_report_layout_standard"  t-att-data-oe-model="doc and doc._name" t-att-data-oe-id="doc and doc.id" t-att-data-oe-lang="doc and doc.env.context.get('lang')">
+            <t t-call="web.address_layout"/>
+            <t t-raw="0"/>
+        </div>
+        <div class="footer o_standard_footer" style="margin-top:0">
+            <table class="table table-sm" style="margin-bottom:0;font-size:14px;" >
+                <tr>
+                    <td class="text-left" style="padding:1px;border:1px solid black;">
+                        <p style="font-weight:700">For <strong><span t-esc="doc.company_id.name"/>.</strong></p><br/>
+                            <div style="padding:14px"/>
+                            <strong>Authorised Signatory</strong>
+                    </td>
+                </tr>
+            </table>
+            <div style="text-align:center;padding:1px;margin-top:none !important;">
+                <p style="float:left;color:black;" class="text-muted"><strong>Page:
+                    <span class="page"/>
+                    of
+                    <span class="topage"/></strong>
+                </p>
+                <strong style="padding-top:-18px;font-size:14px;color:black;">"Action is the foundational key to all success"</strong>
+            </div>
+        </div>
+    </template>
+</data>
+</odoo>
