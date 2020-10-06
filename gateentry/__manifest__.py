@@ -1,6 +1,6 @@
 {
     'name': 'Gate Entry',
-    'version': '13.1',
+    'version': '13.2',
     'author': "Prixgen Tech Solutions Pvt. Ltd.",
     'website': 'https://www.prixgen.com',
     'company': 'Prixgen Tech Solutions Pvt. Ltd.',

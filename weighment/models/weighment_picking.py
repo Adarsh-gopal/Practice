@@ -7,7 +7,7 @@ import time
 import math
 
 from odoo.osv import expression
-from odoo.tools.float_utils import float_round as round
+#from odoo.tools.float_utils import gross_weightfloat_round as round
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.exceptions import UserError, ValidationError
 
@@ -491,6 +491,8 @@ class WeighmentProductMoves(models.Model):
         for line in self:
             if line.product_quantity:
                 line.gross_weight = line.product_quantity * line.std_weight
+            else:
+                line.gross_weight = 0.0
 
 
     def _set_additional_po_order_fields(self, invoice):

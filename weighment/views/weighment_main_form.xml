@@ -167,6 +167,7 @@
 
             <field name="context">{
                     'search_default_weighment_type': [active_id],
+                    'default_weighment_type': active_id,
 
             }
             </field>
@@ -187,6 +188,7 @@
             <field name="domain">[('state', '=', 'open')]</field>
             <field name="context">{
                     'search_default_weighment_type': [active_id],
+                    'default_weighment_type': active_id,
             }
             </field>
             <field name="search_view_id" ref="view_weighment_picking_internal_search"/>

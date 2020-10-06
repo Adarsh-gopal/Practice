@@ -1,6 +1,6 @@
 {
     'name': 'Weighment Module',
-    'version': '11.0',
+    'version': '13.1',
     'author': "Prixgen Tech Solutions Pvt. Ltd.",
     'website': 'https://www.prixgen.com',
     'company': 'Prixgen Tech Solutions Pvt. Ltd.',

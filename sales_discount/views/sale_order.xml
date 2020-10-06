@@ -8,11 +8,12 @@
 		<field name="inherit_id" ref="sale.view_order_form"/>
 		<field name="arch" type="xml">
 			<button name="action_quotation_send" position="after">
-				<button name="merge_product_discount" type="object" string="Calculate Discount" class="oe_highlight" attrs="{'invisible': ['|',('cal_done', '=', True),('visibility_button', '=', False)]}"/>
-			<button name="push_categories" type="object" string="Push Categories" class="oe_highlight" attrs="{'invisible': [('visibility_button', '=', True),('state','=','sale')]}"/>
+				<button name="merge_product_discount" type="object" string="Calculate Discount" class="oe_highlight" attrs="{'invisible': ['|','|',('push_boolean', '=', True),('cal_done', '=', True),('visibility_button', '=', False)]}"/>
+			<button name="push_categories" type="object" string="Push Categories" class="oe_highlight" attrs="{'invisible': [('visibility_button', '=', True),'|',('state','=','sale'),('push_boolean', '=', False)]}"/>
 			</button>
 			<field name='pricelist_id' position='after'>
 				<field name='confirmation_date'/>
+				<field name='push_boolean' invisible='1'/>
 				<field name='sale_order_line' invisible='1'/>
 				<field name='visibility_button' invisible='1'/>
 			</field>

@@ -38,6 +38,7 @@ class SaleOrder(models.Model):
     order_lines = fields.Char(string="Required Field for sale order category discount")
     sale_order_line = fields.Boolean('Sale Discount Line',store=True)
     visibility_button = fields.Boolean('Visibility of Buttons',store=True)
+    push_boolean = fields.Boolean('Push Boolean',store=True)
     #z_fiscal_bool = fields.Boolean(string="Fiscal Value Filter",store=True,compute="func_fiscal_position")
 
     # @api.depends('order_line.category_ids')
@@ -49,11 +50,19 @@ class SaleOrder(models.Model):
     #             if self.sale_order_line == True:
     #                 self.onchange_discount_values()
 
+    @api.onchange('order_line')
+    def Onchange_push_boolean(self):
+        for l in self:
+            l.push_boolean = True
+
     
     def action_confirm(self):
         for line in self:
-            if self.cal_done == False:
-                raise models.ValidationError('First calculate the discounts and then confirm the Sale order...!!!')
+            if line.push_boolean == False:
+                if self.cal_done == False:
+                    raise models.ValidationError('First calculate the discounts and then confirm the Sale order...!!!')
+            if line.push_boolean == True:
+                raise models.ValidationError('Enter Push Category Button...!!!')
         return super(SaleOrder,self).action_confirm()
 
     # 
@@ -246,6 +255,7 @@ class SaleOrder(models.Model):
     def push_categories(self):
         for l in self:
             l.visibility_button = True
+            l.push_boolean = False
             categ_grouped = 0
             categ_lines = 0
             categ_grouped = l.get_product_discount_values()
