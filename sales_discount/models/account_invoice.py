@@ -137,7 +137,7 @@ class AccountInvoice(models.Model):
 				sign = 1
 			else:
 				sign = -1
-			move.amount_untaxed = (sign * (total_untaxed_currency if len(currencies) == 1 else total_untaxed))
+			move.amount_untaxed = move.gross_sales - amount_trade - amount_qty - amount_spcl
 			move.amount_tax = sign * (total_tax_currency if len(currencies) == 1 else total_tax)
 			move.amount_total = sign * (total_currency if len(currencies) == 1 else total)
 			move.amount_residual = -sign * (total_residual_currency if len(currencies) == 1 else total_residual)

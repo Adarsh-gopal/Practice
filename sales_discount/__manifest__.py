@@ -1,6 +1,6 @@
 {
     'name': 'Product Discount',
-    'version': '13.7',
+    'version': '13.8',
     'author': "Prixgen Tech Solutions Pvt. Ltd.",
     'website': 'https://www.prixgen.com',
     'company': 'Prixgen Tech Solutions Pvt. Ltd.',

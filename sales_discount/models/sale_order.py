@@ -139,13 +139,16 @@ class SaleOrder(models.Model):
                         'gross_sales': False
                     })
             for l in order.pricelist_id.company_id.currency_id:
-                amount_untaxed = amount_tax = amount_dis = gross_sales = 0.0
+                amount_untaxed = amount_tax = amount_dis = gross_sales = amount_trade = amount_spcl = amount_qty = 0.0
                 for line in order.order_line:
+                    amount_trade += line.trade_amount
+                    amount_qty += line.quantity_amount
+                    amount_spcl += line.special_amount
                     amount_untaxed += line.price_subtotal
                     amount_tax += line.price_tax
                     gross_sales += line.gross_total
                 order.update({
-                    'amount_untaxed': l.round(amount_untaxed),
+                    'amount_untaxed': l.round(gross_sales - amount_trade - amount_qty - amount_spcl),
                     'amount_tax': l.round(amount_tax),
                     'amount_total': amount_untaxed + amount_tax,
                     #gross sales is the sum of price unit * quantity
