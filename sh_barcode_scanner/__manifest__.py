@@ -64,7 +64,7 @@ debit note barcode mobile scanner
                 'barcodes',
                 'account',
                 'stock',
-                'mrp',
+                
                 'sale',
                 'sh_product_qrcode_generator',
                 
@@ -77,7 +77,7 @@ debit note barcode mobile scanner
     "views/purchase_view.xml",
     "views/stock_view.xml",
     "views/account_view.xml",
-    "views/mrp_view.xml",
+    # "views/mrp_view.xml",
     "views/assets.xml",
     
     

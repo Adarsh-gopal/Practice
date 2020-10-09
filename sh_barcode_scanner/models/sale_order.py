@@ -8,6 +8,12 @@ class sale_order_line(models.Model):
     _inherit = "sale.order.line"
     
     sh_sale_barcode_scanner_is_last_scanned = fields.Boolean(string = "Last Scanned?")
+    barcode_scan_check = fields.Boolean()
+
+    @api.onchange('barcode_scan_check')
+    def get_tax_from_barcode_product(self):
+        if self.barcode_scan_check:
+            self.tax_id = self.product_id.taxes_id
 
 class sale_order(models.Model):
     _name = "sale.order"
@@ -89,6 +95,7 @@ class sale_order(models.Model):
                         'name': search_product.name,
                         'product_uom': search_product.uom_id.id,
                         'product_uom_qty': 1,
+                        'barcode_scan_check':True,
                         'price_unit': search_product.lst_price,
                         'sh_sale_barcode_scanner_is_last_scanned': is_last_scanned,
                         'sequence' : sequence,                        
@@ -153,5 +160,6 @@ class sale_order(models.Model):
     def on_barcode_scanned(self, barcode):
         self._add_product(barcode)
 
-            
+
+
                 
