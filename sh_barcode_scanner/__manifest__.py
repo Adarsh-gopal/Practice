@@ -9,7 +9,7 @@
         
     "support": "support@softhealer.com",    
         
-    'version': '13.0.7',
+    'version': '13.0.8',
         
     "category": "Extra Tools",
 

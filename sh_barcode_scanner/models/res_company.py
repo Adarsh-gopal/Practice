@@ -100,26 +100,26 @@ class res_company(models.Model):
     
     
 
-    #BOM
-    sh_bom_barcode_scanner_type = fields.Selection([
-        ('int_ref','Internal Reference'),
-        ('barcode','Barcode'),
-        ('sh_qr_code','QR Code'),
-        ('all','All'),
-        ],default = 'barcode' ,string='Product Scan Options (BOM)', translate=True)
+    # #BOM
+    # sh_bom_barcode_scanner_type = fields.Selection([
+    #     ('int_ref','Internal Reference'),
+    #     ('barcode','Barcode'),
+    #     ('sh_qr_code','QR Code'),
+    #     ('all','All'),
+    #     ],default = 'barcode' ,string='Product Scan Options (BOM)', translate=True)
     
-    sh_bom_barcode_scanner_last_scanned_color = fields.Boolean(
-        string='Last scanned Color? (BOM)', translate=True,readonly = False)
+    # sh_bom_barcode_scanner_last_scanned_color = fields.Boolean(
+    #     string='Last scanned Color? (BOM)', translate=True,readonly = False)
 
-    sh_bom_barcode_scanner_move_to_top = fields.Boolean(
-        string='Last scanned Move To Top? (BOM)', translate=True,readonly = False)
+    # sh_bom_barcode_scanner_move_to_top = fields.Boolean(
+    #     string='Last scanned Move To Top? (BOM)', translate=True,readonly = False)
 
-    sh_bom_barcode_scanner_warn_sound = fields.Boolean(
-        string='Warning Sound? (BOM)', translate=True,readonly = False)     
+    # sh_bom_barcode_scanner_warn_sound = fields.Boolean(
+    #     string='Warning Sound? (BOM)', translate=True,readonly = False)     
     
 
-    sh_bom_barcode_scanner_auto_close_popup = fields.Integer(
-        string='Auto close alert/error message after (BOM)', translate=True,readonly = False)   
+    # sh_bom_barcode_scanner_auto_close_popup = fields.Integer(
+    #     string='Auto close alert/error message after (BOM)', translate=True,readonly = False)   
 
     
     
