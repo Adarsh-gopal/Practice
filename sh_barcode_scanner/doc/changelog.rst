@@ -31,3 +31,8 @@ bug fixed:
 =========================
 ==> QR Scanning Support Added.
 ==> Add/Create new line in inventory adjustment
+
+
+13.0.7 (Date: 2 Step 2020)
+=========================
+==> Barcode Scanning support for detailed operation added without lot/serial no.

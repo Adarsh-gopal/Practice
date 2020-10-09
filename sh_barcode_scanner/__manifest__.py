@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) Softhealer Technologies.
 {
-    "name": "All In One Barcode Scanner-Basic",
+    "name": "All In One Barcode Scanner-Basic | Sale Order Barcode Scanner | Purchase Order Barcode Scanner | Invoice Barcode Scanner | Inventory Barcode Scanner | Bill Of Material Barcode Scanner | Scrap Barcode Scanner | Warehouse Barcode Scanner",
 
     'author' : 'Softhealer Technologies',
     
@@ -9,15 +9,13 @@
         
     "support": "support@softhealer.com",    
         
-    'version': '13.0.6',
+    'version': '13.0.7',
         
     "category": "Extra Tools",
 
-    "summary": """barcode scanner app odoo, package all in one barcode, sale barcode scanner, purchase in barcode module, invoice in barcode, inventory barcode, stock barcode, bom using barcode, scrap in barcode, multi barcode of one product""",   
+    "summary": "Barcode Scanner Package,Sales Barcode Scanner,Purchase Barcode Scanner Module,Account Barcode Scanner,Stock Barcode Scanner,BOM Barcode Scanner,Request For Quotation Barcode Scanner,Bill Barcode Scanner,PO Barcode Scanner,RFQ Barcode Scanner Odoo",   
         
-    'description': """
-    
-     Do your time-wasting in sales, purchases, invoices, inventory, bill of material, scrap operations by manual product selection? So here are the solutions these modules useful do quick operations of sales, purchases, invoicing and inventory, bill of material, scrap using barcode scanner. You no need to select the product and do one by one. scan it and you do! So be very quick in all operations of odoo and cheers!
+    'description': """Do your time-wasting in sales, purchases, invoices, inventory, bill of material, scrap operations by manual product selection? So here are the solutions these modules useful do quick operations of sales, purchases, invoicing and inventory, bill of material, scrap using barcode scanner. You no need to select the product and do one by one. scan it and you do! So be very quick in all operations of odoo and cheers!
 
  All In One Barcode Scanner - Sales, Purchase, Invoice, Inventory, BOM, Scrap Odoo.
 Operations Of Sales, Purchase Using Barcode, Invoice Using Barcode, Inventory Using Barcode, Bill Of Material Using Barcode, Scrap Using Barcode Module, Sales Barcode Scanner,Purchase Barcode Scanner, Invoice Barcode Scanner, Inventory Barcode Scanner,Bom Barcode Scanner, Single Product Multi Barcode Odoo.
@@ -66,7 +64,7 @@ debit note barcode mobile scanner
                 'barcodes',
                 'account',
                 'stock',
-                # 'mrp',
+                'mrp',
                 'sale',
                 'sh_product_qrcode_generator',
                 
@@ -79,7 +77,7 @@ debit note barcode mobile scanner
     "views/purchase_view.xml",
     "views/stock_view.xml",
     "views/account_view.xml",
-    # "views/mrp_view.xml",
+    "views/mrp_view.xml",
     "views/assets.xml",
     
     

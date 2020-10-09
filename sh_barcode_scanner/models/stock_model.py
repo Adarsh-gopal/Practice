@@ -372,6 +372,7 @@ class stock_move(models.Model):
             
     def on_barcode_scanned(self, barcode):
         
+                        
         is_last_scanned = False
         sequence = 0
         warm_sound_code = ""
@@ -388,22 +389,50 @@ class stock_move(models.Model):
         if self.env.user.company_id.sudo().sh_inventory_barcode_scanner_auto_close_popup:
             warm_sound_code += "AUTO_CLOSE_AFTER_" + str(self.env.user.company_id.sudo().sh_inventory_barcode_scanner_auto_close_popup) + "_MS&"   
 
+        
 
+        # =============================           
+        # UPDATED CODE
+        move_lines = False
+        
+        # INCOMING
+        # ===================================
+        if self.picking_code in ['incoming']:
+            move_lines = self.move_line_nosuggest_ids
 
-            
-            
-                 
+        # OUTGOING AND TRANSFER
+        # ===================================         
+        elif self.picking_code in ['outgoing','internal']:
+            move_lines = self.move_line_ids    
+                        
+        
+        # UPDATED CODE
+        # =============================    
+                
         
         if self.picking_id.state not in ['confirmed','assigned']:
             selections = self.picking_id.fields_get()['state']['selection']
             value = next((v[1] for v in selections if v[0] == self.picking_id.state), self.picking_id.state)
             raise UserError(_(warm_sound_code + "You can not scan item in %s state.") %(value))
-                  
-        elif self.move_line_ids:
-            for line in self.move_line_ids:
+        
+ 
+        elif move_lines:
+
+            
+            
+            for line in move_lines:
                 if self.env.user.company_id.sudo().sh_inventory_barcode_scanner_type == 'barcode':
                     if self.product_id.barcode == barcode:
-                        line.qty_done += 1
+#                         line.qty_done += 1
+            
+                        similar_lines = move_lines.filtered(lambda ml: ml.product_id.barcode == barcode)
+                        len_similar_lines = len(similar_lines)
+
+                        if len_similar_lines:
+                            last_line = similar_lines[len_similar_lines - 1]
+                            last_line.qty_done += 1
+
+
                         
                         self.sequence = sequence
                         self.sh_inventory_barcode_scanner_is_last_scanned = is_last_scanned
@@ -420,8 +449,15 @@ class stock_move(models.Model):
                     
                 elif self.env.user.company_id.sudo().sh_inventory_barcode_scanner_type == 'int_ref':
                     if self.product_id.default_code == barcode:
-                        line.qty_done += 1
+#                         line.qty_done += 1
                         
+                        similar_lines = move_lines.filtered(lambda ml: ml.product_id.barcode == barcode)
+                        len_similar_lines = len(similar_lines)
+
+                        if len_similar_lines:
+                            last_line = similar_lines[len_similar_lines - 1]
+                            last_line.qty_done += 1
+                                                    
                         self.sequence = sequence
                         self.sh_inventory_barcode_scanner_is_last_scanned = is_last_scanned
                                                 
@@ -442,7 +478,15 @@ class stock_move(models.Model):
                     
                 elif self.env.user.company_id.sudo().sh_inventory_barcode_scanner_type == 'sh_qr_code':
                     if self.product_id.sh_qr_code == barcode:
-                        line.qty_done += 1
+#                         line.qty_done += 1
+                        
+                        similar_lines = move_lines.filtered(lambda ml: ml.product_id.barcode == barcode)
+                        len_similar_lines = len(similar_lines)
+
+                        if len_similar_lines:
+                            last_line = similar_lines[len_similar_lines - 1]
+                            last_line.qty_done += 1
+                                                    
                         
                         self.sequence = sequence
                         self.sh_inventory_barcode_scanner_is_last_scanned = is_last_scanned
@@ -462,7 +506,15 @@ class stock_move(models.Model):
                     
                 elif self.env.user.company_id.sudo().sh_inventory_barcode_scanner_type == 'all':
                     if self.product_id.barcode == barcode or self.product_id.default_code == barcode or self.product_id.sh_qr_code == barcode:
-                        line.qty_done += 1
+#                         line.qty_done += 1
+                        
+                        similar_lines = move_lines.filtered(lambda ml: ml.product_id.barcode == barcode)
+                        len_similar_lines = len(similar_lines)
+
+                        if len_similar_lines:
+                            last_line = similar_lines[len_similar_lines - 1]
+                            last_line.qty_done += 1
+                                                    
                         
                         self.sequence = sequence
                         self.sh_inventory_barcode_scanner_is_last_scanned = is_last_scanned
@@ -559,7 +611,7 @@ class stock_picking(models.Model):
                 for move_line in search_mls:
                     
                     if move_line.show_details_visible:
-                        raise UserError(_(warm_sound_code + "You can not scan product item for lot/serial directly here, Pls click detail button (at end each line) and than rescan your product item."))                                       
+                        raise UserError(_(warm_sound_code + "You can not scan product item for Detailed Operations directly here, Pls click detail button (at end each line) and than rescan your product item."))                                       
                                       
                     if self.state == 'draft':
                         move_line.product_uom_qty += 1
