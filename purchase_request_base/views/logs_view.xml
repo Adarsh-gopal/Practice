@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="track_po_line_template1">
+        <div>
+            <strong>The Changed quantity has been updated.</strong>
+            <ul>
+                <li><t t-esc="line.product_id.name"/>:</li>
+                <!-- Changed Product: <t t-esc="product_id" /> -&gt;<br/> -->
+                <t t-if='line.product_id'>
+                Old Product: <t t-esc="line.product_id.name" /><br/>
+                </t>
+
+                <t t-if='line.product_qty'>
+                Changed Quantity: <t t-esc="product_qty" /> -&gt;<br/> 
+                <t t-if='line.product_qty'>
+                Old Quantity: <t t-esc="line.product_qty" /><br/>
+                </t>
+                </t>
+                <t t-if='line.date_required'>
+                Changed Date: <t t-esc="date_required" /> -&gt;<br/> 
+                <t t-if='line.date_required'>
+                Old Date: <t t-esc="line.date_required" /><br/>
+                </t>   
+                <!-- Billed Quantity: <t t-esc="line.qty_invoiced"/> --></t>
+            </ul>
+        </div>
+    </template>
+
+</odoo>
