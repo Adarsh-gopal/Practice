@@ -5,7 +5,6 @@
     'version': '13.0.0.8',
     'summary': 'Purchase Request',
     'author': 'Prixgen Tech Solutions Pvt. Ltd.',
-    'company': 'Prixgen Tech Solutions Pvt. Ltd.',
     'license': "AGPL-3",
     'website': 'http://www.prixgen.com',
     'description': """
