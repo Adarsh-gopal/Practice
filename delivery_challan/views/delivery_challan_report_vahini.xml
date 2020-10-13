@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="vahini_delivery_challan_page_format" model="report.paperformat">
+            <field name="name">Prixgen delivery_challan page format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">43</field>
+            <field name="margin_bottom">28</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+        <report
+            id="delivery_challan_vahini"
+            model="stock.picking"
+            string="Delivery Challan"
+            report_type="qweb-pdf"
+            name="delivery_challan.report_delivery_challan_vahini"
+            file="delivery_challan.report_delivery_challan_vahini"
+            attachment="(object.state == 'posted') and ((object.name or 'DLV').replace('/','_')+'.pdf')"
+            print_report_name="(object._get_report_base_filename())"
+            paperformat="delivery_challan.vahini_delivery_challan_page_format"
+        />
+
+        <template id="external_layout_delivery_challan_vahini">
+            <div class="header">
+                
+                 <table class="table table-sm table-bordered  " width="100%" style="width:100%;border:1px solid black;">
+                    <tr>
+                        <td style="border:1px solid black;">
+                         
+                            <div class="row" style="margin-top:20px">
+                                <img class="text-right" t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="position:absolute; left:35px;height:50px;max-width:160px;padding-left:15;"/>
+                                 
+                                <div class="col-12 text-center" style="margin-top:0px; font-size:15px !important;">
+                                    <h3><b>
+                                            <span style="text-transform:uppercase" t-field="company.partner_id"/>
+                                        </b>
+                                    </h3>
+                                   
+                                    <span t-field="company.partner_id.street"/>
+                                   <br/>
+                                    <span t-field="company.partner_id.street2"/>
+                                    <span style="text-transform:uppercase" t-field="company.city"/>- 
+                                    <span style="text-transform:uppercase" t-field="company.partner_id.zip"/>
+                                    
+                                    
+                                        <span style="text-transform:uppercase" t-field="company.state_id" class="text-center right"/>, 
+                                        <span style="text-transform:uppercase" t-field="company.country_id" class="text-center right"/>
+                                        <br/>
+                                        
+                                   
+
+                                    <div>
+                                        <!-- <i class="fa fa-phone" aria-hidden="true"></i> -->
+                                         <strong>Ph No :</strong>&amp;nbsp;&amp;nbsp;  <span  t-field="company.phone" class="text-center right"/> &amp;nbsp;&amp;nbsp;
+                                        <!-- <i class="fa fa-envelope" aria-hidden="true"></i>  -->
+                                        <strong>Email :</strong>&amp;nbsp;&amp;nbsp;  <span t-field="company.email" class="text-center right"/>
+                                        
+                                    </div>
+
+
+                                    <div >
+                                        <t t-if="company.company_registry" class="text-center">
+                                            <strong><t t-esc="'GSTIN'"/>: </strong>
+                                            <span t-field="company.vat"/>&amp;nbsp;&amp;nbsp;
+                                           <strong> <t t-esc="'CIN'"/>: </strong>
+                                            <span t-field="company.cin_no"/>
+                                            <!-- <t t-esc="'TAN'"/>: -->
+                                            <!-- <span t-field="tan_no"/> -->
+                                            <!-- <t t-esc="'PAN'"/>: -->
+                                            <!-- <span t-field="pan_no"/> -->
+                                            <br/>
+                                        </t>
+                                    </div>
+                                   
+                                </div>                        
+                            </div>
+                            <!-- <div class="row" style="font-size:14px !important;padding-top:5px;">
+                                 <div class="col-4  text-left" style="padding-left:2;">
+                                    <t t-esc="'Ph No'"/>:         
+                                    <span t-field="company.phone"/>
+                                    <br/>
+                                    <t t-esc="'Email'"/>:                                                    
+                                    <span t-field="company.email"/>
+                                </div>
+                                <div class="col-4 mb4 text-center">
+                                    <h3>
+                                        <strong>TAX INVOICE</strong>
+                                    </h3>
+                                </div>
+                                <div class="col-4 text-right" style="padding-right:2;">
+                                    <strong>Place of Buisness: </strong>Karnataka
+                                </div>
+                            </div> -->
+
+                        </td>
+                    </tr>
+                </table>
+            
+            </div>
+            
+                <div class="article o_report_layout_standard"   t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id">
+                    <t t-call="web.address_layout"/>
+                    <t t-raw="0"/>
+                </div>
+                <div class="footer o_standard_footer">
+                        <table class="table table-condensed table-bordered">
+                            <!-- <td style="border:1px solid black">
+                                <div class="row" style="font-size:13px">
+                                    <div class="col-8 text-left" style="height:25%;">
+                                      
+                                            <b>Declaration:</b>
+                                            <br/>We declare that this invoice shows the actual price of the service described and that all particulars are true and correct.          
+                                     
+                                    </div>
+                                    <div class="col-4 text-center" style=" height:25%;">
+                                        <strong>Prixgen Tech Solutions Pvt. Ltd.</strong>
+                                        <br/>
+                                        <br/>
+                              
+                                      
+                                        <span>
+                                            <strong>Authorised Signatory</strong>
+                                        </span>
+                                    </div>
+                                </div>
+                            </td> -->
+                            <tr>
+                            <td style="border:1px solid black">
+                            <strong>Receiver's Seal and Signature</strong> <br/><br/>
+                            <strong>Name</strong>
+                            </td>
+                            <td style="border:1px solid black">
+                            <strong>For Vahini Irrigation Pvt. Ltd.</strong> <br/><br/>
+                            <strong>Authorised Signatory</strong>
+                            </td>
+                            </tr>
+                        </table>
+                        <div style="border-top: 1px solid black; margin-top:-17px;text-align:center">
+                            <span class="text-muted float-left">
+                                    Page: 
+                                <span class="page"/> /
+                                <span class="topage"/>
+                             </span>
+                             "Action is the foundational key to all success"
+                        </div>
+                    </div>
+        </template>
+
+        <template id="report_delivery_challan_vahini">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-if="not o and doc">
+                        <t t-set="o" t-value="doc"/>
+                    </t>
+
+                    <t t-if="o and 'company_id' in o">
+                        <t t-set="company" t-value="o.company_id.sudo()"/>
+                    </t>
+                    <t t-if="not o or not 'company_id' in o">
+                        <t t-set="company" t-value="res_company"/>
+                    </t>
+                    
+                <t t-call="delivery_challan.external_layout_delivery_challan_vahini">
+                    <!-- <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"> -->
+                        <div class="page">
+        <table  class=" table  table-sm table-bordered" width="100%" style="border:1px solid black;">
+            <thead>
+                <style>html * { font-size:13px;
+            }</style>
+                <tr>
+                    <td colspan="6" class="text-center" style="border:1px solid black;">
+                        <b>
+                            <div style="margin-top:10px;margin-bottom:5px">
+                                <font style="font-size:16px; margin-top:20px;">DELIVERY CHALLAN</font>
+                            </div>
+                        </b>
+                    </td>
+                </tr>
+                <tr>
+            
+                    <td colspan="3" style="height:20%;width:50%;border:1px solid black;">
+                       
+                      <strong style="padding:2px">
+                            <span t-field="o.name" style="font-size: 25px;font-weight: bolder;"/>
+                      </strong>
+                      <br/>
+                       
+                            
+                            
+                            <label style="padding:6px">
+                            <strong>Sales Order No :</strong><span t-field="o.sale_id" /> <br/>
+                            <strong>Date :</strong><span t-field="o.sale_id" /> <br/>
+                            <strong>Delivery Date :</strong><span t-field="o.sale_id" /> <br/>
+                            <strong>Delivery To :</strong><span t-field="o.sale_id" /> <br/>
+                               
+                            </label>
+                            
+                            
+                    </td>
+                    
+                    <td  colspan="3" style="height:20%;width:50%;border:1px solid black;padding-top:0px;">
+                        <label style="padding:5px">
+                            <b>Customer Address:</b><br/>
+                            <span t-field="o.partner_id"/>
+                            <br/>
+                            <t t-esc="o.partner_id.street"/>
+                            <br/>
+                            <t t-esc="o.partner_id.street2"/>
+                            <t t-esc="o.partner_id.city"/>,
+                            <t t-esc="o.partner_id.state_id.name"/>,
+                            <t t-esc="o.partner_id.zip"/>
+
+                            <t t-esc="o.partner_id.country_id.name"/><br/>
+                            <b>GSTIN:</b>
+                            <span t-field="o.partner_id.vat"/>
+                            <br/>
+
+                            <t t-if="o.partner_id.email">
+                            <b>Email:</b>
+                            <span t-field="o.partner_id.email"/>
+                            </t>
+                            <br/>
+
+                            <t t-if="o.partner_id.mobile">
+                            <b>Mobile:</b>
+                            <span t-field="o.partner_id.mobile"/>
+                            </t>
+                            
+                        </label>
+
+                      
+                    </td>
+                </tr>
+                <tr>
+            
+                    <td colspan="3" style="height:20%;width:50%;border:1px solid black;">
+                        <label style="padding:5px">
+                            <b>Delivery Address:</b><br/>
+                            <span t-field="o.sale_id.partner_shipping_id"/>
+                            <br/>
+                            <t t-esc="o.sale_id.partner_shipping_id"/>
+                            <br/>
+                            <t t-esc="o.sale_id.partner_shipping_id.street2"/>
+                            <t t-esc="o.sale_id.partner_shipping_id.city"/>,
+                            <t t-esc="o.sale_id.partner_shipping_id.state_id.name"/>,
+                            <t t-esc="o.sale_id.partner_shipping_id.zip"/>
+
+                            <t t-esc="o.sale_id.partner_shipping_id.country_id.name"/><br/>
+                            <b>GSTIN:</b>
+                            <span t-field="o.sale_id.partner_shipping_id.vat"/>
+                            <br/>
+
+                            <t t-if="o.sale_id.partner_shipping_id.email">
+                            <b>Email:</b>
+                            <span t-field="o.sale_id.partner_shipping_id.email"/>
+                            </t>
+                            <br/>
+
+                            <t t-if="o.sale_id.partner_shipping_id.mobile">
+                            <b>Mobile:</b>
+                            <span t-field="o.sale_id.partner_shipping_id.mobile"/>
+                            </t>
+                            
+                        </label>
+
+                    </td>
+                    
+                    <td  colspan="3" style="height:20%;width:50%;border:1px solid black;padding-top:0px;">
+                         <label style="padding:5px">
+                            <b>Consignee Address:</b><br/>
+                            <span t-field="o.sale_id.partner_invoice_id"/>
+                            <br/>
+                            <!-- <t t-esc="o.partner_id.street"/> -->
+                            <br/>
+                            <!-- <t t-esc="o.partner_id.street2"/>
+                            <t t-esc="o.partner_id.city"/>,
+                            <t t-esc="o.partner_id.state_id.name"/>,
+                            <t t-esc="o.partner_id.zip"/> -->
+
+                            <t t-esc="o.partner_id.country_id.name"/><br/>
+                            <b>GSTIN:</b>
+                            <!-- <span t-field="o.partner_id.vat"/> -->
+                            <br/>
+
+                            <t t-if="o.partner_id.email">
+                            <b>Email:</b>
+                            <!-- <span t-field="o.partner_id.email"/> -->
+                            </t>
+                            <br/>
+
+                            <t t-if="o.partner_id.mobile">
+                            <b>Mobile:</b>
+                            <!-- <span t-field="o.partner_id.mobile"/> -->
+                            </t>
+                            
+                        </label>
+
+                       
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th class="text-center" style="border:1px solid black;">SI. No</th>
+                    <th class="text-center" style="border:1px solid black;">Products</th>
+                    <th class="text-center" style="border:1px solid black;">Intial Demand</th>
+                    <th class="text-center" style="border:1px solid black;">Delivered Quantity</th>
+                    <th class="text-center" style="border:1px solid black;">UOM</th>
+                    <th class="text-center" style="border:1px solid black;">Amount</th>
+                   
+                </tr>
+            </thead>
+            <tbody >
+                <t t-set="i" t-value="1"/>
+                <t t-set="total_qty" t-value="0"/>
+                <t t-set="total_deliverd_qty" t-value="0"/>
+               <t  t-foreach="o.move_ids_without_package" t-as="l">
+                <tr>
+
+                    <td class="text-center" style="border:1px solid black;">
+                        <span t-esc="i"/>
+                    </td>
+
+                    <t t-set="i" t-value="i+1"/>
+
+                    <td class="text-left" style="border:1px solid black;">
+                       <span t-field="l.product_id"/>
+                    </td>
+
+                    <td class="text-right" style="border:1px solid black;">
+                      <span t-field="l.product_uom_qty"/>
+                      <t t-set="total_qty" t-value="total_qty + l.product_uom_qty"/>
+                       
+                    </td>
+
+                    <td class="text-right" style="border:1px solid black;">
+                       <span t-field="l.quantity_done"/>
+                       <t t-set="total_deliverd_qty" t-value="total_deliverd_qty + l.quantity_done"/>
+                    </td>
+
+                    <td class="text-left" style="border:1px solid black;">
+                       <span t-field="l.product_uom" />
+                    </td>
+
+                    <td class="text-center" style="border:1px solid black;">
+                       
+                    </td>
+
+                </tr>
+                </t>
+                <tr>
+                    <td class="text-center" style="border:1px solid black;">
+                       
+                    </td>
+                    <td class="text-left" style="border:1px solid black;">
+                       <strong>Total Quantity:</strong>
+                    </td>
+                    <td class="text-right" style="border:1px solid black;">
+                        <strong><span t-esc="'%.2f'%(total_qty)"/></strong>
+                        
+                    </td>
+                    <td class="text-right" style="border:1px solid black;">
+                       <strong><span t-esc="'%.2f'%(total_deliverd_qty)"/></strong>
+                    </td>
+
+                    <td class="text-left" colspan="3" style="border:1px solid black;">
+                       
+                    </td>
+                    
+                </tr>
+                
+            </tbody>
+        </table>                        
+    <!-- </div> -->
+                    </div>
+                    </t>
+                 
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

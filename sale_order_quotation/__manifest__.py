@@ -1,6 +1,6 @@
 {
     'name': 'vahini Sales Quotation',
-    'version': '13.0.0.0',
+    'version': '13.0.0.1',
     'description': """This module consists, the customized quotation report""",
     'category': 'Localization',
     'author': 'Prixgen Tech Solutions Pvt. Ltd.',

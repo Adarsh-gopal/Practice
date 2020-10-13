@@ -9,36 +9,38 @@
                     <div class="row">
                         <div class="col-2" style="font-size:14px;">
                             <div style="margin-bottom:10px;">
-                                <img class="text-right" t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="width:100px;height:50px;"/>
+                                <img class="text-right" t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" style="width:110px;height:55px;"/>
                             </div>
                         </div>
                         <div class="text-center col-10" style="line-height: initial;">
-                            <strong style="font-size:14px;text-transform:uppercase;padding-right:120px" t-field="o.company_id.name"/><br/>
-                            <span style="color:black;font-size:12px;padding-right:120px" t-field="o.company_id.partner_id.street"/><br/>
-                            <span style="color:black;font-size:12px;padding:1px;" t-field="o.company_id.partner_id.street2"/>
-                            <span style="color:black;font-size:12px;padding:1px;" t-field="o.company_id.city"/>
+                            <strong style="font-size:16px;text-transform:uppercase;padding-right:120px" t-field="o.company_id.name"/><br/>
+                            <span style="color:black;font-size:13px;padding-right:120px" t-field="o.company_id.partner_id.street"/><br/>
+                            <span style="color:black;font-size:13px;padding:1px;" t-field="o.company_id.partner_id.street2"/>
+                            <span style="color:black;font-size:13px;padding:1px;" t-field="o.company_id.city"/>
                             <span style="color:black;">-</span>
-                            <span style="color:black;font-size:12px;padding:1px;" t-field="o.company_id.partner_id.zip"/>
-                            <span style="color:black;font-size:12px;padding:1px;" t-field="o.company_id.state_id"/>
+                            <span style="color:black;font-size:13px;padding:1px;" t-field="o.company_id.partner_id.zip"/>
+                            <span style="color:black;font-size:13px;padding:1px;" t-field="o.company_id.state_id"/>
                             <span style="color:black;">,</span>
-                            <span style="color:black;font-size:12px;padding:1px;padding-right:120px" t-field="o.company_id.country_id"/>
+                            <span style="color:black;font-size:13px;padding:1px;padding-right:120px" t-field="o.company_id.country_id"/>
                             <br/>
-                            <strong style="font-size:12px;padding:1px;"><t t-esc="'Phone'"/>:</strong>
-                                <span style="color:black;font-size:12px;" t-field="o.company_id.phone"/>
+                            <strong style="font-size:13px;padding:1px;"><t t-esc="'Phone'"/>:</strong>
+                                <span style="color:black;font-size:13px;" t-field="o.company_id.phone"/>
                             <t t-if='o.company_id.email'>
-                                <strong style="font-size:12px;padding:1px;"><t t-esc="'Email'"/>:</strong>
-                                <t t-set="emailstr" t-value="o.email_split(o.company_id.email)"/> 
-                                <span style="color:black;font-size:12px;" t-esc="emailstr"/>
+                                <strong style="font-size:13px;padding:1px;"><t t-esc="'Email'"/>:</strong>
+                                <!-- <t t-set="emailstr" t-value="o.company_id.email"/>  -->
+                                <span style="color:black;font-size:13px;" t-esc="o.company_id.email"/>
                             </t>
-                            <strong style="font-size:12px;padding:1px;"><t t-esc="'GSTIN:'"/></strong>
-                                <span style="color:black;font-size:12px;" t-field="o.company_id.vat"/>
-                            <strong style="font-size:12px;padding:1px;padding-right:120px"><t t-esc="'CIN:'"/></strong><br/>
-                            <span style="color:black;font-size:12px;padding-right:120px" t-field="o.company_id.cin_no"/>
+                            <strong style="font-size:13px;padding:1px;"><t t-esc="'GSTIN:'"/></strong>
+                                <span style="color:black;font-size:13px;" t-field="o.company_id.vat"/>
+                            <strong style="font-size:13px;padding:1px;padding-right:120px"><t t-esc="'CIN:'"/></strong><br/>
+                            <span style="color:black;font-size:13px;padding-right:120px" t-field="o.company_id.cin_no"/>
                         </div>
                     </div>
                     </td>
                 </tr>
             </table>
+
+            
         </div>
         <div class="article o_report_layout_standard"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
             <t t-call="web.address_layout"/>
@@ -47,18 +49,18 @@
         <div class="footer o_standard_footer" style="margin-top:0">
             <table class="table table-sm" style="margin-bottom:0;font-size:14px;" >
                 <tr>
-                    <td class="text-right" style="padding:1px;border:1px solid black;">
-                        <p style="font-weight:700">For <strong><span t-esc="o.company_id.name"/>.</strong></p><br/>
+                    <td class="text-right" style="padding:6px;border:1px solid black;padding-left:12px;">
+                        <p style="font-weight:700">For <strong><span t-esc="o.company_id.name"/></strong></p><br/>
                             <div style="padding:14px"/>
                             <strong style="padding-right:30px">Authorised Signatory</strong>
                     </td>
                 </tr>
             </table>
             <div style="text-align:center;padding:1px;margin-top:none !important;">
-                <p style="float:left;color:black;" class="text-muted"><strong>Page:
-                    <span class="page"/>
-                    of
-                    <span class="topage"/></strong>
+                <p style="float:left;color:black;" class="text-muted"><strong style="color:black;">Page:
+                    <span style="color:black;" class="page"/>
+                    <a style="color:black;">/</a>
+                    <span style="color:black;" class="topage"/></strong>
                 </p>
                 <strong style="padding-top:-18px;font-size:14px;color:black;">"Action is the foundational key to all success"</strong>
             </div>

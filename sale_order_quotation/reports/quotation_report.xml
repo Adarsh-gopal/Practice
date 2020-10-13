@@ -33,7 +33,7 @@
     <t t-foreach="docs" t-as="o">
     <t t-call="sale_order_quotation.external_layout_standard_vahini">
     <table class="table" style="border:1px solid black;width:100%;padding-top:70px; margin-bottom:0;">
-        <thead>
+        <thead >
             <tr>
                 <td  colspan="10" style="width:100%;border:1px solid black;font-size:14px;" class="text-center">
                     <strong>QUOTATION</strong>
@@ -177,8 +177,24 @@
             </tr>
             <tr>
                 <td colspan="10" style="padding:1px;border:1px solid black;color:black">
-                    <strong>Terms and Conditions:</strong><br/>
-                        <p style="margin-bottom:0"><span t-esc="o.note"/></p>
+                    <strong>Terms and Conditions:</strong>
+                        <!-- <p style="margin-bottom:0"><span t-raw="o.note"/></p> -->
+                       
+                           <div style="margin-left: 20px;">
+                             <ol>
+                                <li>Goods Once sold will not be taken back.</li>
+                                <li>After Due date of Bill, interest of 18% P.A will be charged from the date of Invoice</li>
+                                <li>All disputes subject to Tumkur jurisdiction.</li>
+
+                            </ol>
+                           </div>
+                            <p>Benificiary Name: M/s Vahini Irrigation PVT LTD<br/>
+                            Bank Name: Kotak Mahindra Bank, Tumakuru Branch, IFSC : KKBK0008306<br/>    
+                            PAN No: AABCV2840F</p>
+
+                            <p>NOTE:- Virtual Account Number is Bank Account Number</p>
+                           
+                        
                 </td>
             </tr>
         </tbody>

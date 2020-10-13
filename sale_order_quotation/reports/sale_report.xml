@@ -19,7 +19,7 @@
     <report
         id="custom_sale_vahini"
         model="sale.order"
-        string="sale order"
+        string="Sale order Vahini"
         report_type="qweb-pdf"
         name="sale_order_quotation.sales_order_report"
         file="sale_order_quotation.sales_order_report"
@@ -40,13 +40,13 @@
             </td>
         </tr>
         <tr>
-            <td  colspan="6" style="width:50%;border:1px solid black;font-size:14px;">
+            <td  colspan="5" width="50%" style="width:50%;border:1px solid black;font-size:14px;">
                 <strong style="color:black;">Account No:</strong>
                 <span style="color:black;font-style: normal;" t-esc="o.partner_reference"/><br/>
                 <strong style="color:black;">Customer Name :</strong>
                 <strong><span style="color:black;font-style: normal;" t-esc="o.partner_id.name"/></strong><br/>
                 <span style="color:black;font-style: normal;" t-esc="o.partner_id.street"/><br/>
-                <span style="color:black;font-style: normal;" t-esc="o.partner_id.street2"/><br/>
+                <span style="color:black;font-style: normal;" t-esc="o.partner_id.street2"/>
                 <span style="color:black;font-style: normal;" t-esc="o.partner_id.city"/>
                 <span style="color:black;font-style: normal;" t-esc="o.partner_id.state_id.name"/>
                 <span style="color:black;font-style: normal;" t-esc="o.partner_id.country_id.name"/><br/>
@@ -57,7 +57,7 @@
                 <strong style="color:black;">Email:</strong>
                 <span style="color:black;font-style: normal;" t-esc="o.partner_id.email"/><br/>
             </td>
-            <td colspan="6" style="width:50%;border:1px solid black;font-size:14px;">
+            <td colspan="7" width="50%" style="width:50%;border:1px solid black;font-size:14px;">
                 <strong>Sale Order No:</strong>
                     <span t-field="o.name"/><br/>
                 <strong>Sale Order Date:</strong><span t-esc="o.date_order.strftime('%d-%m-%Y')"/><br/>
@@ -75,7 +75,7 @@
             </td>
         </tr>
         <tr>
-            <td  colspan="6" style="width:50%;border:1px solid black;font-size:14px;">
+            <td  colspan="5" style="width:50%;border:1px solid black;font-size:14px;">
                 <strong>Delivery Address:</strong><br/> 
                     <strong><span style="color:black;font-style: normal;" t-esc="o.warehouse_id.name"/></strong><br/>
                     <span style="color:black;font-style: normal;" t-esc="o.warehouse_id.partner_id.street"/><br/>
@@ -89,10 +89,13 @@
                     <strong style="color:black;">Email:</strong>
                     <span style="color:black;font-style: normal;" t-esc="o.warehouse_id.partner_id.email"/><br/>
             </td>
-            <td colspan="6" style="width:50%;border:1px solid black;font-size:14px;">
+            <td colspan="7" style="width:50%;border:1px solid black;font-size:14px;">
                 <strong>Delivered To: </strong><span t-field="o.z_delivered_to"/><br/>
             </td>
         </tr>
+
+        
+
         <tr style="color:black;font-size:14px;width:100%">
             <th class="text-center" style="padding:1px;width:5%;border:1px solid black;">Sl.No</th>
             <th class="text-center" style="padding:1px;width:10%;border:1px solid black;">Item Code</th>
@@ -105,6 +108,7 @@
             <th class="text-center" style="padding:1px;width:3%;border:1px solid black;">Taxes</th>
             <th class="text-center" style="padding:1px;width:12%;border:1px solid black;">Amount</th>
         </tr>
+       
     </thead>
         <tbody style=";border:1px solid black;font-size:14px;">
             <t t-set="i" t-value="1"/>
@@ -234,6 +238,7 @@
                 </td>          
             </tr>
             </t>
+
             <tr>
                 <td colspan="2" class="text-center" style="padding:1px;border:1px solid black;">
                     <strong style="color:black">Gross Total</strong>
@@ -248,6 +253,7 @@
                     <span t-esc="o.amount_untaxed"/>
                 </td>
             </tr>
+            
             <tr>
                 <td colspan="10" class="text-left" style="border:1px solid black;">
                     <strong style="color:black">Amount In Words:</strong>
