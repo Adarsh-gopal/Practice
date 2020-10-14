@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="delivery_order_reference_on_sale_order_merge_form_views" model="ir.ui.view">
+    	<field name="name">account.move.delivery.form</field>
+    	<field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//page[@name='other_info']/group/group[1]/field[@name='invoice_origin']" position="after">
+                   <field name="delivery_origin"/>       
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
