@@ -423,8 +423,6 @@ class stock_move(models.Model):
             for line in move_lines:
                 if self.env.user.company_id.sudo().sh_inventory_barcode_scanner_type == 'barcode':
                     if self.product_id.barcode == barcode:
-#                         line.qty_done += 1
-            
                         similar_lines = move_lines.filtered(lambda ml: ml.product_id.barcode == barcode)
                         len_similar_lines = len(similar_lines)
 
@@ -449,9 +447,8 @@ class stock_move(models.Model):
                     
                 elif self.env.user.company_id.sudo().sh_inventory_barcode_scanner_type == 'int_ref':
                     if self.product_id.default_code == barcode:
-#                         line.qty_done += 1
-                        
-                        similar_lines = move_lines.filtered(lambda ml: ml.product_id.barcode == barcode)
+                        similar_lines = move_lines.filtered(
+                            lambda ml: ml.product_id.default_code == barcode)
                         len_similar_lines = len(similar_lines)
 
                         if len_similar_lines:
@@ -478,9 +475,8 @@ class stock_move(models.Model):
                     
                 elif self.env.user.company_id.sudo().sh_inventory_barcode_scanner_type == 'sh_qr_code':
                     if self.product_id.sh_qr_code == barcode:
-#                         line.qty_done += 1
-                        
-                        similar_lines = move_lines.filtered(lambda ml: ml.product_id.barcode == barcode)
+                        similar_lines = move_lines.filtered(
+                            lambda ml: ml.product_id.sh_qr_code == barcode)
                         len_similar_lines = len(similar_lines)
 
                         if len_similar_lines:
@@ -505,10 +501,9 @@ class stock_move(models.Model):
                     
                     
                 elif self.env.user.company_id.sudo().sh_inventory_barcode_scanner_type == 'all':
-                    if self.product_id.barcode == barcode or self.product_id.default_code == barcode or self.product_id.sh_qr_code == barcode:
-#                         line.qty_done += 1
-                        
-                        similar_lines = move_lines.filtered(lambda ml: ml.product_id.barcode == barcode)
+                    if self.product_id.barcode == barcode or self.product_id.default_code == barcode or self.product_id.sh_qr_code == barcode:                       
+                        similar_lines = move_lines.filtered(
+                            lambda ml: ml.product_id.barcode == barcode or ml.product_id.default_code == barcode or ml.product_id.sh_qr_code == barcode)
                         len_similar_lines = len(similar_lines)
 
                         if len_similar_lines:

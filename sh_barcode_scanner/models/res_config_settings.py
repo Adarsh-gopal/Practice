@@ -120,28 +120,28 @@ class res_config_settings(models.TransientModel):
      
     
     #BOM
-    # sh_bom_barcode_scanner_type = fields.Selection([
-    #     ('int_ref','Internal Reference'),
-    #     ('barcode','Barcode'),
-    #      ('sh_qr_code','QR Code'),
-    #      ('all','All'),
-    #     ],related='company_id.sh_bom_barcode_scanner_type', string='Product Scan Options', translate=True,readonly = False)
+    sh_bom_barcode_scanner_type = fields.Selection([
+        ('int_ref','Internal Reference'),
+        ('barcode','Barcode'),
+         ('sh_qr_code','QR Code'),
+         ('all','All'),
+        ],related='company_id.sh_bom_barcode_scanner_type', string='Product Scan Options', translate=True,readonly = False)
 
-    # sh_bom_barcode_scanner_last_scanned_color = fields.Boolean(
-    #     related='company_id.sh_bom_barcode_scanner_last_scanned_color', 
-    #     string='Last scanned Color?', translate=True,readonly = False)
+    sh_bom_barcode_scanner_last_scanned_color = fields.Boolean(
+        related='company_id.sh_bom_barcode_scanner_last_scanned_color', 
+        string='Last scanned Color?', translate=True,readonly = False)
 
-    # sh_bom_barcode_scanner_move_to_top = fields.Boolean(
-    #     related='company_id.sh_bom_barcode_scanner_move_to_top', 
-    #     string='Last scanned Move To Top?', translate=True,readonly = False)
+    sh_bom_barcode_scanner_move_to_top = fields.Boolean(
+        related='company_id.sh_bom_barcode_scanner_move_to_top', 
+        string='Last scanned Move To Top?', translate=True,readonly = False)
 
-    # sh_bom_barcode_scanner_warn_sound = fields.Boolean(
-    #     related='company_id.sh_bom_barcode_scanner_warn_sound', 
-    #     string='Warning Sound?', translate=True,readonly = False) 
+    sh_bom_barcode_scanner_warn_sound = fields.Boolean(
+        related='company_id.sh_bom_barcode_scanner_warn_sound', 
+        string='Warning Sound?', translate=True,readonly = False) 
     
-    # sh_bom_barcode_scanner_auto_close_popup = fields.Integer(
-    #     related='company_id.sh_bom_barcode_scanner_auto_close_popup', 
-    #     string='Auto close alert/error message after', translate=True,readonly = False)           
+    sh_bom_barcode_scanner_auto_close_popup = fields.Integer(
+        related='company_id.sh_bom_barcode_scanner_auto_close_popup', 
+        string='Auto close alert/error message after', translate=True,readonly = False)           
     
     
     

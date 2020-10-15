@@ -6,7 +6,6 @@ Do your time-wasting in sales, purchases, invoices, inventory, bill of material,
 User Guide
 ============
 Blog: https://www.softhealer.com/blog/odoo-2/post/all-in-one-barcode-scanner-basic-32
-Product: /shop/product/all-in-one-barcode-scanner-basic-27
 
 Installation
 ============

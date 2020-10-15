@@ -7,5 +7,5 @@ from . import sale_order
 from . import purchase_order
 from . import stock_model
 from . import account_invoice
-# from . import bom_barcode_scanner
+from . import bom_barcode_scanner
 

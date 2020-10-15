@@ -8,12 +8,6 @@ class sale_order_line(models.Model):
     _inherit = "sale.order.line"
     
     sh_sale_barcode_scanner_is_last_scanned = fields.Boolean(string = "Last Scanned?")
-    barcode_scan_check = fields.Boolean()
-
-    @api.onchange('barcode_scan_check')
-    def get_tax_from_barcode_product(self):
-        if self.barcode_scan_check:
-            self.tax_id = self.product_id.taxes_id
 
 class sale_order(models.Model):
     _name = "sale.order"
@@ -85,6 +79,7 @@ class sale_order(models.Model):
                     line.sh_sale_barcode_scanner_is_last_scanned = is_last_scanned
                     line.sequence = sequence                    
                     line.product_id_change()
+                    
                     line._onchange_discount()                    
                     break
             else:
@@ -95,7 +90,6 @@ class sale_order(models.Model):
                         'name': search_product.name,
                         'product_uom': search_product.uom_id.id,
                         'product_uom_qty': 1,
-                        'barcode_scan_check':True,
                         'price_unit': search_product.lst_price,
                         'sh_sale_barcode_scanner_is_last_scanned': is_last_scanned,
                         'sequence' : sequence,                        
@@ -103,63 +97,21 @@ class sale_order(models.Model):
                     if search_product.uom_id:
                         vals.update({
                             "product_uom": search_product.uom_id.id,                            
-                        })                      
-                    new_order_line = self.order_line.new(vals)
-                    self.order_line += new_order_line
+                        })  
+                                                         
+                    new_order_line = self.order_line.with_context({'default_order_id':self.id}).new(vals)
                     new_order_line.product_id_change()
-                    new_order_line._onchange_discount() 
-                        
-                        
-                        
-                    # ==========================================================================
-                    # To Apply Discount
-                    # ==========================================================================
-                    if (new_order_line and new_order_line.product_id and new_order_line.product_uom and
-                            self.partner_id and self.pricelist_id and
-                            self.pricelist_id.discount_policy == 'without_discount' and
-                            self.env.user.has_group('product.group_discount_per_so_line')):
-                                       
-                        new_order_line.discount = 0.0
-                        product = new_order_line.product_id.with_context(
-                            lang=self.partner_id.lang,
-                            partner=self.partner_id,
-                            quantity=new_order_line.product_uom_qty,
-                            date=self.date_order,
-                            pricelist=self.pricelist_id.id,
-                            uom=new_order_line.product_uom.id,
-                            fiscal_position=self.env.context.get('fiscal_position')
-                        )
-                
-                        product_context = dict(self.env.context, partner_id=self.partner_id.id, date=self.date_order, uom=new_order_line.product_uom.id)
-                
-                        price, rule_id = self.pricelist_id.with_context(product_context).get_product_price_rule(new_order_line.product_id, new_order_line.product_uom_qty or 1.0, self.partner_id)
-                        new_list_price, currency = new_order_line.with_context(product_context)._get_real_price_currency(product, rule_id, new_order_line.product_uom_qty, new_order_line.product_uom, self.pricelist_id.id)
-                
-                        if new_list_price != 0:
-                            if self.pricelist_id.currency_id != currency:
-                                # we need new_list_price in the same currency as price, which is in the SO's pricelist's currency
-                                new_list_price = currency._convert(
-                                    new_list_price, self.pricelist_id.currency_id,
-                                    self.company_id or self.env.company, self.date_order or fields.Date.today())
-                            discount = (new_list_price - price) / new_list_price * 100
-                            if (discount > 0 and new_list_price > 0) or (discount < 0 and new_list_price < 0):
-                                new_order_line.discount = discount
-                            
-                    # ==========================================================================
-                    # To Apply Discount
-                    # ==========================================================================                        
-                        
-                                        
-                     
+                    new_order_line.product_uom_change()
+                    new_order_line._onchange_discount()
+                    self.order_line += new_order_line                     
                 else:                   
                     raise UserError(_(warm_sound_code + "Scanned Internal Reference/Barcode not exist in any product!"))                          
                 
-            
+                
             
                 
     def on_barcode_scanned(self, barcode):
         self._add_product(barcode)
 
-
-
+            
                 

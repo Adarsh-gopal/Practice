@@ -36,3 +36,11 @@ bug fixed:
 13.0.7 (Date: 2 Step 2020)
 =========================
 ==> Barcode Scanning support for detailed operation added without lot/serial no.
+
+
+13.0.8 (Date: 14 Oct 2020)
+=========================
+==> BUG FIXED:TAXES NOT DISPLAY WHEN CREATE NEW LINE IN SALE ORDER
+
+
+
